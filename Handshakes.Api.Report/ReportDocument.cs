@@ -26,7 +26,7 @@ namespace Handshakes.Api.Report
 
 		public void InjectReportElement(ReportElement element)
 		{
-			variables.Add(string.Format(@"DOCVARIABLE  {0}  \* MERGEFORMAT", element.Key), (IReportReplaceable)element);
+			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
 		}
 
 		public void Save()
@@ -35,15 +35,15 @@ namespace Handshakes.Api.Report
 			var header = document.MainDocumentPart.HeaderParts.FirstOrDefault();
 			if(header != null)
 			{
-				Replaces(header.Header.Descendants<FieldCode>());
+				Replaces(header.Header.Descendants<FieldCode>().ToArray());
 			}
 
 			// replace body variable
-			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>());
+			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray());
 			document.Close();
 		}
 
-		private void Replaces(IEnumerable<FieldCode> fields)
+		private void Replaces(FieldCode[] fields)
 		{
 			foreach (var field in fields)
 			{
@@ -52,8 +52,12 @@ namespace Handshakes.Api.Report
 				{
 					var paragraph = field.Parent.Parent;
 					var elementAt = paragraph.ElementsBefore().Count();
-					var newParagraph = variables[key].Replace((Paragraph)paragraph);
-					paragraph.Parent.InsertAt(newParagraph, elementAt);
+					var newParagraphs = variables[key].Replace((Paragraph)paragraph);
+					for (var i = 0; i < newParagraphs.Length; i++)
+					{
+						paragraph.Parent.InsertAt(newParagraphs[i], elementAt + i);
+					}
+					paragraph.Remove();
 				}
 			}
 		}

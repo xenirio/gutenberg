@@ -16,7 +16,7 @@ namespace Handshakes.Api.Report.Models
 			set { SetValue(value); }
 		}
 
-		public OpenXmlCompositeElement Replace(Paragraph paragraph)
+		public OpenXmlCompositeElement[] Replace(OpenXmlCompositeElement element)
 		{
 			throw new NotImplementedException();
 		}
