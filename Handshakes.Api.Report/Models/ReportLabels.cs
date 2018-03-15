@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 
 namespace Handshakes.Api.Report.Models
 {
-	public class ReportLabel : ReportElement, IReportReplaceable
+	public class ReportLabels : ReportElement, IReportReplaceable
 	{
-		public string Value
+		public string[] Values
 		{
-			get { return GetValue<string>(); }
+			get { return GetValue<string[]>(); }
 			set { SetValue(value); }
 		}
 
 		public OpenXmlCompositeElement Replace(Paragraph paragraph)
 		{
-			var prg = (Paragraph)paragraph.Clone();
-			prg.RemoveAllChildren<Run>();
-			prg.AppendChild(new Run(new Text(Value)));
-			return prg;
+			throw new NotImplementedException();
 		}
 	}
 }

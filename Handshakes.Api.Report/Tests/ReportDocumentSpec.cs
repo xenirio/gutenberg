@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Handshakes.Api.Report.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,8 +28,9 @@ namespace Handshakes.Api.Report.Tests
 		[TestMethod]
 		public void Should_Save_Document()
 		{
-			document.InjectReportLabel("Header.Entity.Name", "Coopers");
-			document.InjectReportLabel("Content", "ABCD");
+			document.InjectReportElement(new ReportLabel() { Key = "Header.Entity.Name", Value = "Coopers" });
+			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Name", Value = "Coopers" });
+			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Names", Value = "Coopers & Bakery" });
 			document.Save();
 		}
 	}

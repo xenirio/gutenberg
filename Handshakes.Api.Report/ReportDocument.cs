@@ -1,7 +1,9 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Handshakes.Api.Report.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,7 @@ namespace Handshakes.Api.Report
 	internal class ReportDocument
 	{
 		private WordprocessingDocument document;
-		private List<ReportElement> variables = new List<ReportElement>();
+		private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
 
 		public ReportDocument(string filePath)
 		{
@@ -22,46 +24,36 @@ namespace Handshakes.Api.Report
 			document = WordprocessingDocument.Open(filePath, true);
 		}
 
-		public void InjectReportLabel(string key, string value)
+		public void InjectReportElement(ReportElement element)
 		{
-			variables.Add(new ReportLabel() { Key = key, Value = value });
+			variables.Add(string.Format(@"DOCVARIABLE  {0}  \* MERGEFORMAT", element.Key), (IReportReplaceable)element);
 		}
 
 		public void Save()
 		{
-			string header = string.Empty;
-			var headerPart = document.MainDocumentPart.HeaderParts.FirstOrDefault();
-			if (headerPart != null) {
-				using (StreamReader reader = new StreamReader(headerPart.GetStream()))
-				{
-					header = reader.ReadToEnd();
-				}
+			// replace header variable
+			var header = document.MainDocumentPart.HeaderParts.FirstOrDefault();
+			if(header != null)
+			{
+				Replaces(header.Header.Descendants<FieldCode>());
 			}
 
-			string body = string.Empty;
-			using (StreamReader sr = new StreamReader(document.MainDocumentPart.GetStream()))
-			{
-				body = sr.ReadToEnd();
-			}
+			// replace body variable
+			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>());
+			document.Close();
+		}
 
-			foreach (var variable in variables)
+		private void Replaces(IEnumerable<FieldCode> fields)
+		{
+			foreach (var field in fields)
 			{
-				if (variable.GetType() == typeof(ReportLabel))
+				var key = field.Text.Trim();
+				if (variables.ContainsKey(key))
 				{
-					var label = (ReportLabel)variable;
-					body = body.Replace(label.Key, label.Value);
-					header = header.Replace(label.Key, label.Value);
-				}
-			}
-			using (StreamWriter writer = new StreamWriter(document.MainDocumentPart.GetStream(FileMode.Create)))
-			{
-				writer.Write(body);
-			}
-			if (!string.IsNullOrWhiteSpace(header))
-			{
-				using (StreamWriter writer = new StreamWriter(document.MainDocumentPart.HeaderParts.First().GetStream(FileMode.Create)))
-				{
-					writer.Write(header);
+					var paragraph = field.Parent.Parent;
+					var elementAt = paragraph.ElementsBefore().Count();
+					var newParagraph = variables[key].Replace((Paragraph)paragraph);
+					paragraph.Parent.InsertAt(newParagraph, elementAt);
 				}
 			}
 		}

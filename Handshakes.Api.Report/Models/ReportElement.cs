@@ -6,11 +6,8 @@ namespace Handshakes.Api.Report.Models
 {
     public abstract class ReportElement
     {
-		private string _key;
-		public string Key {
-			get { return String.Format("{{{0}}}", _key); }
-			set { _key = value; }
-		}
+		public string Key { get; set; }
+
 		protected object value { get; set; }
 
 		protected T GetValue<T>()
