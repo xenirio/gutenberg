@@ -10,6 +10,6 @@ namespace Handshakes.Api.Report.Models
 {
 	interface IReportReplaceable
 	{
-		OpenXmlCompositeElement[] Replace(OpenXmlCompositeElement element);
+		void Replace(Run element);
 	}
 }

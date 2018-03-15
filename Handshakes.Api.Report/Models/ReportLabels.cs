@@ -16,15 +16,23 @@ namespace Handshakes.Api.Report.Models
 			set { SetValue(value); }
 		}
 
-		public OpenXmlCompositeElement[] Replace(OpenXmlCompositeElement element)
+		public void Replace(Run element)
 		{
-			var paragraphs = new List<Paragraph>();
-			foreach (var v in Values)
+			var tmpParagraph = (Paragraph)element.Parent.Clone();
+			var elementAt = element.Parent;
+			var root = element.Parent.Parent;
+			for (var i = 0; i < Values.Length; i++)
 			{
-				var label = new ReportLabel() { Key = "", Value = v };
-				paragraphs.Add((Paragraph)label.Replace(element)[0]);
+				Paragraph paragraph = (Paragraph)element.Parent;
+				if (i > 0)
+				{
+					paragraph = tmpParagraph;
+					root.InsertAfter(paragraph, elementAt);
+					elementAt = paragraph;
+				}
+				var label = new ReportLabel() { Key = "", Value = Values[i] };
+				label.Replace((Run)paragraph.Descendants<FieldCode>().ToArray()[0].Parent);
 			}
-			return paragraphs.ToArray();
 		}
 	}
 }

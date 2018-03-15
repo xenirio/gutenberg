@@ -14,12 +14,14 @@ namespace Handshakes.Api.Report.Models
 			set { SetValue(value); }
 		}
 
-		public OpenXmlCompositeElement[] Replace(OpenXmlCompositeElement element)
+		public void Replace(Run element)
 		{
-			var prg = (Paragraph)element.Clone();
-			prg.RemoveAllChildren<Run>();
-			prg.AppendChild(new Run(new Text(Value)));
-			return new Paragraph[] { prg };
+			var paragraph = (Paragraph)element.Parent;
+			if (paragraph != null)
+			{
+				paragraph.RemoveAllChildren<Run>();
+				paragraph.AppendChild(new Run(new Text(Value)));
+			}
 		}
 	}
 }

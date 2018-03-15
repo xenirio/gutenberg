@@ -50,14 +50,7 @@ namespace Handshakes.Api.Report
 				var key = field.Text.Trim();
 				if (variables.ContainsKey(key))
 				{
-					var paragraph = field.Parent.Parent;
-					var elementAt = paragraph.ElementsBefore().Count();
-					var newParagraphs = variables[key].Replace((Paragraph)paragraph);
-					for (var i = 0; i < newParagraphs.Length; i++)
-					{
-						paragraph.Parent.InsertAt(newParagraphs[i], elementAt + i);
-					}
-					paragraph.Remove();
+					variables[key].Replace((Run)field.Parent);
 				}
 			}
 		}

@@ -49,9 +49,9 @@
   <ItemGroup>
     <Compile Include="Models\IReportReplaceable.cs" />
     <Compile Include="Models\ReportElement.cs" />
-    <Compile Include="Models\ReportImage.cs" />
     <Compile Include="Models\ReportLabel.cs" />
     <Compile Include="Models\ReportLabels.cs" />
+    <Compile Include="Models\ReportTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDocument.cs" />
     <Compile Include="ReportGenerator.cs" />
@@ -60,6 +60,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\Sample.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SampleTable.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

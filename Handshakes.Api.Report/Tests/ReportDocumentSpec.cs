@@ -67,6 +67,16 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 				File.Delete(outfile);
 			File.Copy(sourcefile, outfile);
 			var document = new ReportDocument(outfile);
+
+			document.InjectReportElement(new ReportTable()
+			{
+				Key = "Content.Table.Entity",
+				Values = new string[][] {
+					new string[] { "Coopers", "Firm", "Chiang Mai", "John", "Good" },
+					new string[] { "John", "Person", "USA", "John", "Good" }
+				}
+			});
+			document.Save();
 		}
 	}
 }
