@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml;
 
 namespace Handshakes.Api.Report.Model
 {
-	public class ReportImage : ReportElement, IReportReplaceable
+	internal class ReportImage : ReportElement, IReportReplaceable
 	{
 		public byte[] Value
 		{

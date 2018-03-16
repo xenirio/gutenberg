@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Handshakes.Api.Report.Model
 {
-    public abstract class ReportElement
+    internal abstract class ReportElement
     {
 		public string Key { get; set; }
 

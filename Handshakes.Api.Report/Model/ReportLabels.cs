@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml;
 
 namespace Handshakes.Api.Report.Model
 {
-	public class ReportLabels : ReportElement, IReportReplaceable
+	internal class ReportLabels : ReportElement, IReportReplaceable
 	{
 		public string[] Values
 		{

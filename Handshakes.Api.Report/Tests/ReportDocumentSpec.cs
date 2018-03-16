@@ -20,7 +20,7 @@ namespace Handshakes.Api.Report.Tests
 			if (File.Exists(outfile))
 				File.Delete(outfile);
 			File.Copy(sourcefile, outfile);
-			var document = new ReportDocument(outfile);
+			var document = new ReportDocument();
 
 			document.InjectReportElement(new ReportLabel() { Key = "Header.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
 			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
@@ -55,7 +55,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Remark.Chinese", Value = @"Lorem存有悲坐阿梅德，consectetur adipiscing ELIT。然而，关心群众坐，很多足球恨香蕉。信用评级机构的sed arcu交流porttitor拉克丝。作业电视台的足球成就，而临床检查，以适应区域。但是，现在很多笑声微波下巴颤抖的。 Curabitur imperdiet，lectus简历accumsan森佩尔胡斯托麦格纳hendrerit ullamcorper英里，ID iaculis猫，他们现在要做的不是。规划毕业酱制造和摄影宣传消毒胡萝卜。这使我们现在可是好东西生活。 Eleifend Vivamus前庭tortor ID ullamcorper。 Phasellus NEC燕雀mauris，欧盟aliquam法无。再融资。局伤心继电器消毒。性能SAPIEN SAPIEN无线网元的政策。直到在，创新的硬件足球融资运行LOREM。
 
 足球SAPIEN需要纸箱。整数暖锋。发酵存有mauris非，porttitor油树了。 Phasellus accumsan DUI NIBH，vehicula前庭pharetra ID，posuere QUIS SAPIEN。笔记本电脑的视频电缆，如笔者在零。 Morbi tempor sollicitudin出来，它变得比孕妇ornare lobortis。拱门直到SAPIEN。 Donec发酵lectus enim，从eget欧盟turpis NEC consequat。制造赌波观光，或直到酱性能。" });
-			document.Save();
+			document.Save(outfile);
 		}
 
 		[TestMethod]
@@ -66,7 +66,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 			if (File.Exists(outfile))
 				File.Delete(outfile);
 			File.Copy(sourcefile, outfile);
-			var document = new ReportDocument(outfile);
+			var document = new ReportDocument();
 
 			document.InjectReportElement(new ReportTable()
 			{
@@ -76,7 +76,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 					new string[] { "John", "Person", "USA", "John", "Good" }
 				}
 			});
-			document.Save();
+			document.Save(outfile);
 		}
 	}
 }

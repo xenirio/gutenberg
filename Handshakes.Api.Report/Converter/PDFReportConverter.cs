@@ -32,13 +32,15 @@ namespace Handshakes.Api.Report.Converter
 			return new PDFReportConverter().Convert(filePath);
 		}
 
-		public static void ConvertToFile(string filePath, string destinationPath)
+		public static void ConvertToFile(string filePath)
 		{
+			var outFile = string.Format(@"{0}\{1}.pdf", Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath));
+
 			//Load Document
 			Document document = new Document();
 			document.LoadFromFile(filePath);
 
-			document.SaveToFile(destinationPath, FileFormat.PDF);
+			document.SaveToFile(outFile, FileFormat.PDF);
 		}
 	}
 }

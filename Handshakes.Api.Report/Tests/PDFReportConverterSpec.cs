@@ -15,9 +15,8 @@ namespace Handshakes.Api.Report.Tests
 		public void Should_Convert_Document()
 		{
 			var sourcefile = Environment.CurrentDirectory + @"\Resources\Sample.docx";
-			var outfile = Environment.CurrentDirectory + @"\Resources\SampleTest.pdf";
 
-			PDFReportConverter.ConvertToFile(sourcefile, outfile);
+			PDFReportConverter.ConvertToFile(sourcefile);
 		}
 	}
 }
