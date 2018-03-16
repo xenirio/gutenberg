@@ -4,7 +4,7 @@ using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 
-namespace Handshakes.Api.Report.Models
+namespace Handshakes.Api.Report.Model
 {
 	public class ReportLabel : ReportElement, IReportReplaceable
 	{

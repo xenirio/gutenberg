@@ -1,6 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Handshakes.Api.Report.Models;
+using Handshakes.Api.Report.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

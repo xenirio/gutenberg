@@ -1,4 +1,4 @@
-﻿using Handshakes.Api.Report.Models;
+﻿using Handshakes.Api.Report.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,9 @@ namespace Handshakes.Api.Report.Tests
 			File.Copy(sourcefile, outfile);
 			var document = new ReportDocument(outfile);
 
-			document.InjectReportElement(new ReportLabel() { Key = "Header.Entity.Name", Value = "Coopers" });
-			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Name", Value = "Coopers" });
-			document.InjectReportElement(new ReportLabels() { Key = "Content.Entity.Names", Values = new string[] { "Coopers & Bakery", "Bakery & Coopers" }});
+			document.InjectReportElement(new ReportLabel() { Key = "Header.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
+			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
+			document.InjectReportElement(new ReportLabels() { Key = "Content.Entity.Names", Values = new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" } });
 			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Remark", Value = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin blandit massa, sit amet ornare odio aliquet a. Aliquam ac porttitor lacus. Duis molestie felis convallis, volutpat orci et, ornare tellus. Proin sed risus sit amet nunc faucibus pharetra. Curabitur imperdiet, lectus vitae accumsan semper, justo magna hendrerit lacus, eget iaculis felis quam non nunc. Vestibulum condimentum congue lectus, et consequat augue venenatis sit amet. Vivamus id efficitur nunc, sed suscipit lacus. Vivamus eleifend vestibulum tortor id ullamcorper. Phasellus nec fringilla mauris, eu aliquam nulla. In hac habitasse platea dictumst. Nullam venenatis tristique hendrerit. Maecenas a tellus euismod sapien elementum lobortis. Donec a felis imperdiet, cursus lorem at, porttitor odio.
 
 Morbi eget lobortis sapien.Integer non fermentum ante.Mauris non fermentum ipsum,
@@ -77,6 +77,17 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 				}
 			});
 			document.Save();
+		}
+
+		[TestMethod]
+		public void Should_Save_EntityInfo()
+		{
+			var sourcefile = Environment.CurrentDirectory + @"\Resources\Templates\TemplateEntityInfo.docx";
+			var outfile = Environment.CurrentDirectory + @"\Resources\EntityInfo.docx";
+			if (File.Exists(outfile))
+				File.Delete(outfile);
+			File.Copy(sourcefile, outfile);
+			var document = new ReportDocument(outfile);
 		}
 	}
 }

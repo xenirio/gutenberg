@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Handshakes.Api.Report.Models
+namespace Handshakes.Api.Report.Model
 {
     public abstract class ReportElement
     {

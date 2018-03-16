@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 
-namespace Handshakes.Api.Report.Models
+namespace Handshakes.Api.Report.Model
 {
 	public class ReportImage : ReportElement, IReportReplaceable
 	{
@@ -16,7 +16,7 @@ namespace Handshakes.Api.Report.Models
 			set { SetValue(value); }
 		}
 
-		public OpenXmlCompositeElement[] Replace(OpenXmlCompositeElement element)
+		public void Replace(Run element)
 		{
 			throw new NotImplementedException();
 		}

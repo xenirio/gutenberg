@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace Handshakes.Api.Report.Models
+namespace Handshakes.Api.Report.Model
 {
 	interface IReportReplaceable
 	{
