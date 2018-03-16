@@ -21,22 +21,41 @@ namespace Handshakes.Api.Report
 			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
 		}
 
-		public void Save(string filePath)
+		private WordprocessingDocument ReplaceDocument(WordprocessingDocument document)
 		{
-			if (!File.Exists(filePath))
-				throw new FileNotFoundException("File not found", filePath);
-			var document = WordprocessingDocument.Open(filePath, true);
-
 			// replace header variable
 			var header = document.MainDocumentPart.HeaderParts.FirstOrDefault();
-			if(header != null)
+			if (header != null)
 			{
 				Replaces(header.Header.Descendants<FieldCode>().ToArray());
 			}
 
 			// replace body variable
 			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray());
+			return document;
+		}
+
+		public void Save(string filePath)
+		{
+			if (!File.Exists(filePath))
+				throw new FileNotFoundException("File not found", filePath);
+			var document = WordprocessingDocument.Open(filePath, true);
+			ReplaceDocument(document);
 			document.Close();
+		}
+
+		public byte[] Save(byte[] bytes)
+		{
+			using (MemoryStream mem = new MemoryStream())
+			{
+				mem.Write(bytes, 0, bytes.Length);
+				using (WordprocessingDocument document = WordprocessingDocument.Open(mem, true))
+				{
+					ReplaceDocument(document);
+					document.Save();
+					return mem.ToArray();
+				}
+			}
 		}
 
 		private void Replaces(FieldCode[] fields)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Handshakes.Api.Report.Tests
 			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
 			var report = new ReportGenerator(template);
 			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
-			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings Limited");
+			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings");
 			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
 			report.setParagraphs("Content.Entity.Remark", remarks);
 			report.setParagraphs("Content.Entity.Remark.Chinese", chineseRemarks);
@@ -43,11 +44,13 @@ namespace Handshakes.Api.Report.Tests
 			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
 			var report = new ReportGenerator(template);
 			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
-			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings Limited");
+			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings");
 			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
 			report.setParagraphs("Content.Entity.Remark", remarks);
 			report.setParagraphs("Content.Entity.Remark.Chinese", chineseRemarks);
-			report.GenerateToFile(OutputFormat.PDF);
+
+			var outputPath = string.Format(@"{0}\{1}{2}.pdf", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+			report.GenerateToFile(outputPath);
 		}
 	}
 }

@@ -39,7 +39,7 @@ namespace Handshakes.Api.Report
 			_document.InjectReportElement(new ReportTable() { Key = key, Values = content });
 		}
 
-		private string saveDocument(string filePath)
+		private string saveDocumentToFile(string filePath)
 		{
 			var fileName = Path.GetFileNameWithoutExtension(filePath);
 			var outFile = string.Format(@"{0}\{1}{2}{3}", Path.GetDirectoryName(filePath), fileName, DateTime.Now.Ticks, Path.GetExtension(filePath));
@@ -50,29 +50,34 @@ namespace Handshakes.Api.Report
 			return outFile;
 		}
 
+		private byte[] saveDocumentToBytes(string filePath)
+		{
+			return _document.Save(File.ReadAllBytes(filePath));
+		}
+
 		public byte[] GenerateToByte(OutputFormat format = OutputFormat.PDF)
 		{
 			byte[] bytes = null;
-			var outFile = saveDocument(_templatePath);
+			var outFile = saveDocumentToBytes(_templatePath);
 			switch (format) {
 				case OutputFormat.PDF:
 					bytes = PDFReportConverter.ConvertToByte(outFile);
 					break;
 			}
-			File.Delete(outFile);
+			//File.Delete(outFile);
 			return bytes;
 		}
 
-		public void GenerateToFile(OutputFormat format = OutputFormat.PDF)
+		public void GenerateToFile(string outputPath, OutputFormat format = OutputFormat.PDF)
 		{
-			var outFile = saveDocument(_templatePath);
+			var outFile = saveDocumentToBytes(_templatePath);
 			switch (format)
 			{
 				case OutputFormat.PDF:
-					PDFReportConverter.ConvertToFile(outFile);
+					PDFReportConverter.ConvertToFile(outFile, outputPath);
 					break;
 			}
-			File.Delete(outFile);
+			//File.Delete(outFile);
 		}
 	}
 }
