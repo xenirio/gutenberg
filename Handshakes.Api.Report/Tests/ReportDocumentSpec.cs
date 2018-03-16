@@ -78,16 +78,5 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 			});
 			document.Save();
 		}
-
-		[TestMethod]
-		public void Should_Save_EntityInfo()
-		{
-			var sourcefile = Environment.CurrentDirectory + @"\Resources\Templates\TemplateEntityInfo.docx";
-			var outfile = Environment.CurrentDirectory + @"\Resources\EntityInfo.docx";
-			if (File.Exists(outfile))
-				File.Delete(outfile);
-			File.Copy(sourcefile, outfile);
-			var document = new ReportDocument(outfile);
-		}
 	}
 }
