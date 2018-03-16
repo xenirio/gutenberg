@@ -64,7 +64,6 @@ namespace Handshakes.Api.Report
 					bytes = PDFReportConverter.ConvertToByte(outFile);
 					break;
 			}
-			//File.Delete(outFile);
 			return bytes;
 		}
 
@@ -77,7 +76,6 @@ namespace Handshakes.Api.Report
 					PDFReportConverter.ConvertToFile(outFile, outputPath);
 					break;
 			}
-			//File.Delete(outFile);
 		}
 	}
 }
