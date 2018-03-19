@@ -9,9 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Handshakes.Api.Report</RootNamespace>
     <AssemblyName>Handshakes.Api.Report</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +73,7 @@
     <Compile Include="ReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Handshakes.Api.Report.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
