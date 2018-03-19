@@ -1,16 +1,12 @@
 ﻿using Handshakes.Api.Report.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Handshakes.Api.Report.Tests
 {
 	[TestClass]
-	internal class ReportDocumentSpec
+	public class ReportDocumentSpec
 	{
 		[TestMethod]
 		public void Should_Save_Document()

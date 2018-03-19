@@ -2,15 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Handshakes.Api.Report.Tests
 {
 	[TestClass]
-	internal class PDFReportConverterSpec
+	public class PDFReportConverterSpec
 	{
 		[TestMethod]
 		public void Should_Convert_Document()

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handshakes.Api.Report", "Handshakes.Api.Report\Handshakes.Api.Report.csproj", "{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handshakes.Api.Report.Test", "Handshakes.Api.Report.Test\Handshakes.Api.Report.Test.csproj", "{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
