@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Handshakes.Api.Report.Tests
 {
 	[TestClass]
-	public class PDFReportConverterSpec
+	internal class PDFReportConverterSpec
 	{
 		[TestMethod]
 		public void Should_Convert_Document()

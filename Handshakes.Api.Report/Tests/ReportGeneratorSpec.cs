@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Handshakes.Api.Report.Tests
 {
 	[TestClass]
-	public class ReportGeneratorSpec
+	internal class ReportGeneratorSpec
 	{
 		private string[] remarks = new string[] {
 		@"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum, nisi sit amet maximus placerat, purus lorem maximus orci, pulvinar placerat erat velit sit amet lectus. Quisque sed sapien eget lectus posuere interdum at congue arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam quis lectus sapien. Etiam tristique sed eros quis luctus. Quisque cursus, magna id porta accumsan, augue massa ornare sem, ac ullamcorper tortor nisi nec erat. Proin massa lacus, tincidunt sed massa ac, dapibus gravida lorem. Aliquam et tincidunt ipsum. Sed eleifend varius varius. Nunc elementum molestie purus, at pharetra turpis pharetra id. Suspendisse semper, sem ut vehicula pulvinar, ante dolor efficitur quam, ut mollis neque lectus et mauris. Pellentesque eu est ac justo varius ultrices in vitae enim. Cras nec orci sed lectus lobortis convallis.",

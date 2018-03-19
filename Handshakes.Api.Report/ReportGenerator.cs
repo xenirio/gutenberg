@@ -1,11 +1,7 @@
 ﻿using Handshakes.Api.Report.Converter;
 using Handshakes.Api.Report.Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Handshakes.Api.Report
 {

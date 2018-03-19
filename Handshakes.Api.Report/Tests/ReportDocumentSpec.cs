@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Handshakes.Api.Report.Tests
 {
 	[TestClass]
-	public class ReportDocumentSpec
+	internal class ReportDocumentSpec
 	{
 		[TestMethod]
 		public void Should_Save_Document()

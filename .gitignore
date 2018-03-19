@@ -322,3 +322,5 @@ ASALocalRun/
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
+*.nuspec
+Handshakes.Api.Report/nuget.exe

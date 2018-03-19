@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DocumentFormat.OpenXml.Wordprocessing;
-using DocumentFormat.OpenXml;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Handshakes.Api.Report.Model
 {

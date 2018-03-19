@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Handshakes.Api.Report.Model
+﻿namespace Handshakes.Api.Report.Model
 {
-    internal abstract class ReportElement
+	internal abstract class ReportElement
     {
 		public string Key { get; set; }
 
