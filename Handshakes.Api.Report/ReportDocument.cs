@@ -19,14 +19,21 @@ namespace Handshakes.Api.Report
 		private WordprocessingDocument ReplaceDocument(WordprocessingDocument document)
 		{
 			// replace header variable
-			var header = document.MainDocumentPart.HeaderParts.FirstOrDefault();
-			if (header != null)
+			var headers = document.MainDocumentPart.HeaderParts.ToList();
+			foreach (var header in headers)
 			{
 				Replaces(header.Header.Descendants<FieldCode>().ToArray());
 			}
 
 			// replace body variable
 			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray());
+
+			// replace footer variable
+			var footers = document.MainDocumentPart.FooterParts.ToList();
+			foreach (var footer in footers)
+			{
+				Replaces(footer.Footer.Descendants<FieldCode>().ToArray());
+			}
 			return document;
 		}
 

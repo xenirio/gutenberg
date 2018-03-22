@@ -29,6 +29,7 @@ namespace Handshakes.Api.Report.Tests
 			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
 			var report = new ReportGenerator(template);
 			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
+			report.setParagraph("Footer.Creator", "Vee");
 			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings");
 			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
 			report.setParagraphs("Content.Entity.Remark", remarks);
@@ -42,6 +43,8 @@ namespace Handshakes.Api.Report.Tests
 			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
 			var report = new ReportGenerator(template);
 			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
+			report.setParagraph("Footer.DateTime", DateTime.Now.ToShortDateString());
+			report.setParagraph("Footer.Creator", "Vee");
 			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings Limited");
 			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
 			report.setParagraph("Content.Entity.Type", "EVENT");

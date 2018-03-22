@@ -19,6 +19,7 @@ namespace Handshakes.Api.Report.Tests
 			var document = new ReportDocument();
 
 			document.InjectReportElement(new ReportLabel() { Key = "Header.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
+			document.InjectReportElement(new ReportLabel() { Key = "Footer.Creator", Value = "Vee" });
 			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Name", Value = "IPO of Ezra Holdings Limited" });
 			document.InjectReportElement(new ReportLabels() { Key = "Content.Entity.Names", Values = new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" } });
 			document.InjectReportElement(new ReportLabel() { Key = "Content.Entity.Remark", Value = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin blandit massa, sit amet ornare odio aliquet a. Aliquam ac porttitor lacus. Duis molestie felis convallis, volutpat orci et, ornare tellus. Proin sed risus sit amet nunc faucibus pharetra. Curabitur imperdiet, lectus vitae accumsan semper, justo magna hendrerit lacus, eget iaculis felis quam non nunc. Vestibulum condimentum congue lectus, et consequat augue venenatis sit amet. Vivamus id efficitur nunc, sed suscipit lacus. Vivamus eleifend vestibulum tortor id ullamcorper. Phasellus nec fringilla mauris, eu aliquam nulla. In hac habitasse platea dictumst. Nullam venenatis tristique hendrerit. Maecenas a tellus euismod sapien elementum lobortis. Donec a felis imperdiet, cursus lorem at, porttitor odio.
