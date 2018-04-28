@@ -9,7 +9,7 @@ namespace Xenirio.Component.Gutenberg.Tests
 	public class ReportDocumentSpec
 	{
 		[TestMethod]
-		public void Should_Save_Document()
+		public void Should_Replace_Label_Element()
 		{
 			var sourcefile = Environment.CurrentDirectory + @"\Resources\Sample.docx";
 			var outfile = Environment.CurrentDirectory + @"\Resources\SampleTest.docx";
@@ -56,7 +56,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 		}
 
 		[TestMethod]
-		public void Should_Save_Table_Document()
+		public void Should_Replace_Table_Element()
 		{
 			var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleTable.docx";
 			var outfile = Environment.CurrentDirectory + @"\Resources\SampleTableTest.docx";
@@ -75,5 +75,28 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 			});
 			document.Save(outfile);
 		}
+
+        [TestMethod]
+        public void Should_Replace_Image_Element()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleImage.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleImageTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+
+            document.InjectReportElement(new ReportImage()
+            {
+                Key = "Content.Image.Logo",
+                Value = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\logo.png")
+            });
+            document.InjectReportElement(new ReportImage()
+            {
+                Key = "Content.Image.Banner",
+                Value = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png")
+            });
+            document.Save(outfile);
+        }
 	}
 }
