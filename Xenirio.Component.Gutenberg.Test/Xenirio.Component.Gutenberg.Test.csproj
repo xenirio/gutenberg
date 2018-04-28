@@ -6,8 +6,8 @@
     <ProjectGuid>{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Handshakes.Api.Report.Test</RootNamespace>
-    <AssemblyName>Handshakes.Api.Report.Test</AssemblyName>
+    <RootNamespace>Xenirio.Component.Gutenberg.Test</RootNamespace>
+    <AssemblyName>Xenirio.Component.Gutenberg.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,12 +56,6 @@
     <Compile Include="ReportGeneratorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Handshakes.Api.Report\Handshakes.Api.Report.csproj">
-      <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
-      <Name>Handshakes.Api.Report</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Sample.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -71,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
+      <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
+      <Name>Xenirio.Component.Gutenberg</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

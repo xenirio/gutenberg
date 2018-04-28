@@ -1,9 +1,9 @@
-﻿using Handshakes.Api.Report.Converter;
-using Handshakes.Api.Report.Model;
+﻿using Xenirio.Component.Gutenberg.Converter;
+using Xenirio.Component.Gutenberg.Model;
 using System;
 using System.IO;
 
-namespace Handshakes.Api.Report
+namespace Xenirio.Component.Gutenberg
 {
 	public enum OutputFormat
 	{

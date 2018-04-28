@@ -1,9 +1,9 @@
-﻿using Handshakes.Api.Report.Converter;
+﻿using Xenirio.Component.Gutenberg.Converter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 
-namespace Handshakes.Api.Report.Tests
+namespace Xenirio.Component.Gutenberg.Tests
 {
 	[TestClass]
 	public class PDFReportConverterSpec

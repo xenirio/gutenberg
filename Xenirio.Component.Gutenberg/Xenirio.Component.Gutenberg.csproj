@@ -7,8 +7,8 @@
     <ProjectGuid>{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Handshakes.Api.Report</RootNamespace>
-    <AssemblyName>Handshakes.Api.Report</AssemblyName>
+    <RootNamespace>Xenirio.Component.Gutenberg</RootNamespace>
+    <AssemblyName>Xenirio.Component.Gutenberg</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -73,10 +73,10 @@
     <Compile Include="ReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Handshakes.Api.Report.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Xenirio.Component.Gutenberg.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

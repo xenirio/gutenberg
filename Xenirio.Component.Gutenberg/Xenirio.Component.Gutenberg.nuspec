@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Handshakes.Api.Report</id>
+    <id>Xenirio.Component.Gutenberg</id>
     <version>1.0.2</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Handshakes.Api.Report.dll" target="lib\net45\Handshakes.Api.Report.dll" />
+    <file src="bin\Release\Xenirio.Component.Gutenberg.dll" target="lib\net45\Xenirio.Component.Gutenberg.dll" />
   </files>
 </package>

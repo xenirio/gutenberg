@@ -1,6 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace Handshakes.Api.Report.Model
+namespace Xenirio.Component.Gutenberg.Model
 {
 	internal class ReportLabel : ReportElement, IReportReplaceable
 	{

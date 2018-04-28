@@ -1,4 +1,4 @@
-﻿namespace Handshakes.Api.Report.Model
+﻿namespace Xenirio.Component.Gutenberg.Model
 {
 	internal abstract class ReportElement
     {

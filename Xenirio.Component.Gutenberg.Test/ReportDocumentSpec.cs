@@ -1,9 +1,9 @@
-﻿using Handshakes.Api.Report.Model;
+﻿using Xenirio.Component.Gutenberg.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 
-namespace Handshakes.Api.Report.Tests
+namespace Xenirio.Component.Gutenberg.Tests
 {
 	[TestClass]
 	public class ReportDocumentSpec

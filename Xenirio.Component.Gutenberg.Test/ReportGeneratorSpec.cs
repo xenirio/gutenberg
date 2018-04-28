@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Handshakes.Api.Report.Tests
+namespace Xenirio.Component.Gutenberg.Tests
 {
 	[TestClass]
 	public class ReportGeneratorSpec

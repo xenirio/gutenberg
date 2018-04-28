@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace Handshakes.Api.Report.Model
+namespace Xenirio.Component.Gutenberg.Model
 {
 	internal class ReportLabels : ReportElement, IReportReplaceable
 	{

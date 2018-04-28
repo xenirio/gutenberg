@@ -1,4 +1,4 @@
-﻿namespace Handshakes.Api.Report.Converter
+﻿namespace Xenirio.Component.Gutenberg.Converter
 {
 	interface IReportConvertable
 	{

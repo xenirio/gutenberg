@@ -1,11 +1,11 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Handshakes.Api.Report.Model;
+using Xenirio.Component.Gutenberg.Model;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Handshakes.Api.Report
+namespace Xenirio.Component.Gutenberg
 {
 	internal class ReportDocument
 	{

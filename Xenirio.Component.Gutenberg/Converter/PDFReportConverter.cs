@@ -1,7 +1,7 @@
 ﻿using Spire.Doc;
 using System.IO;
 
-namespace Handshakes.Api.Report.Converter
+namespace Xenirio.Component.Gutenberg.Converter
 {
 	internal class PDFReportConverter : IReportConvertable
 	{
