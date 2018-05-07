@@ -54,7 +54,9 @@ namespace Xenirio.Component.Gutenberg.Model
                         widthEmus = maxWidthEmus;
                         heightEmus = (long)(widthEmus * ratio);
                     }
-                    addImage(paragraph, mainPart.GetIdOfPart(imagePart), widthEmus, heightEmus);
+                    var run = runImage(mainPart.GetIdOfPart(imagePart), widthEmus, heightEmus);
+                    paragraph.RemoveAllChildren<Run>();
+                    paragraph.AppendChild(run);
                 }
             }
         }
@@ -67,7 +69,7 @@ namespace Xenirio.Component.Gutenberg.Model
             element?.Ancestors<Footer>()?.FirstOrDefault()?.FooterPart as OpenXmlPart;
         }
 
-        private void addImage(Paragraph paragraph, string relationshipId, long width, long height)
+        private Run runImage(string relationshipId, long width, long height)
         {
             // Define the reference of the image.
             var element =
@@ -131,9 +133,7 @@ namespace Xenirio.Component.Gutenberg.Model
                          DistanceFromRight = (UInt32Value)0U,
                          EditId = "50D07946"
                      });
-
-            paragraph.RemoveAllChildren<Run>();
-            paragraph.AppendChild(new Run(element));
+            return new Run(element);
         }
     }
 }

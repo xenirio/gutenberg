@@ -68,9 +68,21 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
 			document.InjectReportElement(new ReportTable()
 			{
 				Key = "Content.Table.Entity",
-				Values = new string[][] {
-					new string[] { "Coopers", "Firm", "Chiang Mai", "John", "Good" },
-					new string[] { "John", "Person", "USA", "John", "Good" }
+				Elements = new ReportLabel[][] {
+					new ReportLabel[] {
+                        new ReportLabel() { Value = "Coopers" },
+                        new ReportLabel() { Value = "Firm" },
+                        new ReportLabel() { Value = "Chiang Mai" },
+                        new ReportLabel() { Value = "John" },
+                        new ReportLabel() { Value = "Good" },
+                    },
+					new ReportLabel[] {
+                        new ReportLabel() { Value = "John" },
+                        new ReportLabel() { Value = "Person" },
+                        new ReportLabel() { Value = "USA" },
+                        new ReportLabel() { Value = "John" },
+                        new ReportLabel() { Value = "Good" }
+                    }
 				}
 			});
 			document.Save(outfile);
@@ -98,5 +110,39 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             });
             document.Save(outfile);
         }
-	}
+
+        [TestMethod]
+        public void Should_Replace_Image_Table()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleImageTable.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleImageTableTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+
+            var byteLogo = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\logo.png");
+            document.InjectReportElement(new ReportTable()
+            {
+                Key = "Content.Image.Logo",
+                Elements = new ReportImage[][]{
+                    new ReportImage[] {
+                        new ReportImage(){ Value = byteLogo }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Value = byteLogo }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Value = byteLogo }
+                    }
+                }
+            });
+            document.InjectReportElement(new ReportImage()
+            {
+                Key = "Content.Image.Banner",
+                Value = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png")
+            });
+            document.Save(outfile);
+        }
+    }
 }

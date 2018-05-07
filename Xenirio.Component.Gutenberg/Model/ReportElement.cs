@@ -4,7 +4,7 @@
     {
 		public string Key { get; set; }
 
-		protected object value { get; set; }
+		public object value { get; set; }
 
 		protected T GetValue<T>()
 		{

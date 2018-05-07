@@ -53,7 +53,7 @@ namespace Xenirio.Component.Gutenberg.Tests
 			report.setParagraph("Content.Entity.Place", "Singapore");
 			report.setParagraph("Content.Entity.Number", "ISG8754");
 			report.setParagraph("Content.Entity.Date", "3 July 1988");
-			report.setTable("Content.Entity.Connections", new string[][] {
+			report.setTableParagraph("Content.Entity.Connections", new string[][] {
 				new string[] { "Total Entities", "7" },
 				new string[] { "Person", "0" },
 				new string[] { "Corporate", "7" },

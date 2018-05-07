@@ -2,13 +2,17 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
-    <releaseNotes>First version</releaseNotes>
+    <releaseNotes>
+      - Update to support image report element
+      - Fixed bug of table element
+      - Allow table element to support multiple report element
+    </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
     <dependencies>
