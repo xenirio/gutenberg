@@ -75,7 +75,7 @@ namespace Xenirio.Component.Gutenberg.Tests
                 new string[] { "Others", "0" }
             });
 
-            var outputPath = string.Format(@"{0}\{1}{2}.pdf", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
             report.GenerateToFile(outputPath);
         }
 
