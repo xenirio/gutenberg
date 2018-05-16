@@ -8,6 +8,7 @@ namespace Xenirio.Component.Gutenberg
 {
 	public enum OutputFormat
 	{
+        Word = 0,
 		PDF = 1
 	}
 	public class ReportGenerator
@@ -84,7 +85,7 @@ namespace Xenirio.Component.Gutenberg
 			return _document.Save(File.ReadAllBytes(filePath));
 		}
 
-		public byte[] GenerateToByte(OutputFormat format = OutputFormat.PDF)
+		public byte[] GenerateToByte(OutputFormat format = OutputFormat.Word)
 		{
 			byte[] bytes = null;
 			var outFile = saveDocumentToBytes(_templatePath);
@@ -92,19 +93,25 @@ namespace Xenirio.Component.Gutenberg
 				case OutputFormat.PDF:
 					bytes = PDFReportConverter.ConvertToByte(outFile);
 					break;
-			}
+                default:
+                    return outFile;
+
+            }
 			return bytes;
 		}
 
-		public void GenerateToFile(string outputPath, OutputFormat format = OutputFormat.PDF)
+		public void GenerateToFile(string outputPath, OutputFormat format = OutputFormat.Word)
 		{
-			var outFile = saveDocumentToBytes(_templatePath);
 			switch (format)
 			{
 				case OutputFormat.PDF:
-					PDFReportConverter.ConvertToFile(outFile, outputPath);
+                    var outFile = saveDocumentToBytes(_templatePath);
+                    PDFReportConverter.ConvertToFile(outFile, outputPath);
 					break;
-			}
+                default:
+                    saveDocumentToFile(_templatePath);
+                    break;
+            }
 		}
 	}
 }
