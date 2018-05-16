@@ -62,14 +62,16 @@ namespace Xenirio.Component.Gutenberg
 
 		private void Replaces(FieldCode[] fields)
 		{
-			foreach (var field in fields)
-			{
-				var key = field.Text.Trim();
-				if (variables.ContainsKey(key))
-				{
-					variables[key].Replace((Run)field.Parent);
-				}
-			}
+            foreach (var field in fields)
+            {
+                var key = field.Text.Trim();
+                IReportReplaceable variable;
+                if (variables.ContainsKey(key))
+                    variable = variables[key];
+                else
+                    variable = new ReportLabel() { Key = key, Value = ""};
+                variable.Replace((Run)field.Parent);
+            }
 		}
 	}
 }
