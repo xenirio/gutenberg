@@ -38,20 +38,6 @@ namespace Xenirio.Component.Gutenberg.Tests
         }
 
         [TestMethod]
-		public void Should_Generate_PDF_Bytes_Report()
-		{
-			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
-			var report = new ReportGenerator(template);
-			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
-			report.setParagraph("Footer.Creator", "Vee");
-			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings");
-			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
-			report.setParagraphs("Content.Entity.Remark", remarks);
-			report.setParagraphs("Content.Entity.Remark.Chinese", chineseRemarks);
-			Assert.IsNotNull(report.GenerateToByte(OutputFormat.PDF));
-		}
-
-        [TestMethod]
         public void Should_Generate_File_Report()
         {
             var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
@@ -78,33 +64,5 @@ namespace Xenirio.Component.Gutenberg.Tests
             var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
             report.GenerateToFile(outputPath);
         }
-
-        [TestMethod]
-		public void Should_Generate_PDF_File_Report()
-		{
-			var template = Environment.CurrentDirectory + @"\Resources\Sample.docx";
-			var report = new ReportGenerator(template);
-			report.setParagraph("Header.Entity.Name", "IPO of Ezra Holdings Limited");
-			report.setParagraph("Footer.DateTime", DateTime.Now.ToShortDateString());
-			report.setParagraph("Footer.Creator", "Vee");
-			report.setParagraph("Content.Entity.Name", "IPO of Ezra Holdings Limited");
-			report.setParagraphs("Content.Entity.Names", new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" });
-			report.setParagraph("Content.Entity.Type", "EVENT");
-			report.setParagraph("Content.Entity.SubType", "IPO");
-			report.setParagraphs("Content.Entity.Remark", remarks.Concat(chineseRemarks).ToArray());
-			report.setParagraph("Content.Entity.Place", "Singapore");
-			report.setParagraph("Content.Entity.Number", "ISG8754");
-			report.setParagraph("Content.Entity.Date", "3 July 1988");
-			report.setTableParagraph("Content.Entity.Connections", new string[][] {
-				new string[] { "Total Entities", "7" },
-				new string[] { "Person", "0" },
-				new string[] { "Corporate", "7" },
-				new string[] { "Events", "0" },
-				new string[] { "Others", "0" }
-			});
-
-			var outputPath = string.Format(@"{0}\{1}{2}.pdf", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
-			report.GenerateToFile(outputPath, OutputFormat.PDF);
-		}
     }
 }

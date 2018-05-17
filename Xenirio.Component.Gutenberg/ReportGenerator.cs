@@ -1,5 +1,4 @@
-﻿using Xenirio.Component.Gutenberg.Converter;
-using Xenirio.Component.Gutenberg.Model;
+﻿using Xenirio.Component.Gutenberg.Model;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -8,8 +7,7 @@ namespace Xenirio.Component.Gutenberg
 {
 	public enum OutputFormat
 	{
-        Word = 0,
-		PDF = 1
+        Word = 0
 	}
 	public class ReportGenerator
 	{
@@ -87,27 +85,18 @@ namespace Xenirio.Component.Gutenberg
 
 		public byte[] GenerateToByte(OutputFormat format = OutputFormat.Word)
 		{
-			byte[] bytes = null;
 			var outFile = saveDocumentToBytes(_templatePath);
 			switch (format) {
-				case OutputFormat.PDF:
-					bytes = PDFReportConverter.ConvertToByte(outFile);
-					break;
                 default:
                     return outFile;
 
             }
-			return bytes;
 		}
 
 		public void GenerateToFile(string outputPath, OutputFormat format = OutputFormat.Word)
 		{
 			switch (format)
 			{
-				case OutputFormat.PDF:
-                    var outFile = saveDocumentToBytes(_templatePath);
-                    PDFReportConverter.ConvertToFile(outFile, outputPath);
-					break;
                 default:
                     saveDocumentToFile(_templatePath);
                     break;
