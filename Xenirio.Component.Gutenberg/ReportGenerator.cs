@@ -67,29 +67,20 @@ namespace Xenirio.Component.Gutenberg
             _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
         }
 
-        private string saveDocumentToFile(string filePath)
+        private void saveDocumentToFile(string filePath)
 		{
-			var fileName = Path.GetFileNameWithoutExtension(filePath);
-			var outFile = string.Format(@"{0}\{1}{2}{3}", Path.GetDirectoryName(filePath), fileName, DateTime.Now.Ticks, Path.GetExtension(filePath));
-			if (File.Exists(outFile))
-				File.Delete(outFile);
-			File.Copy(filePath, outFile);
-			_document.Save(outFile);
-			return outFile;
-		}
-
-		private byte[] saveDocumentToBytes(string filePath)
-		{
-			return _document.Save(File.ReadAllBytes(filePath));
+			if (File.Exists(filePath))
+				File.Delete(filePath);
+			File.Copy(_templatePath, filePath);
+			_document.Save(filePath);
 		}
 
 		public byte[] GenerateToByte(OutputFormat format = OutputFormat.Word)
 		{
-			var outFile = saveDocumentToBytes(_templatePath);
-			switch (format) {
+			var outBytes = _document.Save(File.ReadAllBytes(_templatePath));
+            switch (format) {
                 default:
-                    return outFile;
-
+                    return outBytes;
             }
 		}
 
@@ -98,7 +89,7 @@ namespace Xenirio.Component.Gutenberg
 			switch (format)
 			{
                 default:
-                    saveDocumentToFile(_templatePath);
+                    saveDocumentToFile(outputPath);
                     break;
             }
 		}

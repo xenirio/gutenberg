@@ -54,7 +54,7 @@ namespace Xenirio.Component.Gutenberg
 				using (WordprocessingDocument document = WordprocessingDocument.Open(mem, true))
 				{
 					ReplaceDocument(document);
-					document.Save();
+					document.Close();
 					return mem.ToArray();
 				}
 			}
