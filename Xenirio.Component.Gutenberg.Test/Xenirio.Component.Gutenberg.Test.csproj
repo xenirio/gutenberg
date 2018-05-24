@@ -50,7 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PDFReportConverterSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDocumentSpec.cs" />
     <Compile Include="ReportGeneratorSpec.cs" />

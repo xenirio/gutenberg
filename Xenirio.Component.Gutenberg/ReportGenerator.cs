@@ -1,5 +1,4 @@
-﻿using Xenirio.Component.Gutenberg.Converter;
-using Xenirio.Component.Gutenberg.Model;
+﻿using Xenirio.Component.Gutenberg.Model;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -8,8 +7,7 @@ namespace Xenirio.Component.Gutenberg
 {
 	public enum OutputFormat
 	{
-        Word = 0,
-		PDF = 1
+        Word = 0
 	}
 	public class ReportGenerator
 	{
@@ -69,47 +67,29 @@ namespace Xenirio.Component.Gutenberg
             _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
         }
 
-        private string saveDocumentToFile(string filePath)
+        private void saveDocumentToFile(string filePath)
 		{
-			var fileName = Path.GetFileNameWithoutExtension(filePath);
-			var outFile = string.Format(@"{0}\{1}{2}{3}", Path.GetDirectoryName(filePath), fileName, DateTime.Now.Ticks, Path.GetExtension(filePath));
-			if (File.Exists(outFile))
-				File.Delete(outFile);
-			File.Copy(filePath, outFile);
-			_document.Save(outFile);
-			return outFile;
-		}
-
-		private byte[] saveDocumentToBytes(string filePath)
-		{
-			return _document.Save(File.ReadAllBytes(filePath));
+			if (File.Exists(filePath))
+				File.Delete(filePath);
+			File.Copy(_templatePath, filePath);
+			_document.Save(filePath);
 		}
 
 		public byte[] GenerateToByte(OutputFormat format = OutputFormat.Word)
 		{
-			byte[] bytes = null;
-			var outFile = saveDocumentToBytes(_templatePath);
-			switch (format) {
-				case OutputFormat.PDF:
-					bytes = PDFReportConverter.ConvertToByte(outFile);
-					break;
+			var outBytes = _document.Save(File.ReadAllBytes(_templatePath));
+            switch (format) {
                 default:
-                    return outFile;
-
+                    return outBytes;
             }
-			return bytes;
 		}
 
 		public void GenerateToFile(string outputPath, OutputFormat format = OutputFormat.Word)
 		{
 			switch (format)
 			{
-				case OutputFormat.PDF:
-                    var outFile = saveDocumentToBytes(_templatePath);
-                    PDFReportConverter.ConvertToFile(outFile, outputPath);
-					break;
                 default:
-                    saveDocumentToFile(_templatePath);
+                    saveDocumentToFile(outputPath);
                     break;
             }
 		}
