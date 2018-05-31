@@ -2,15 +2,14 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.3.0</version>
+    <version>1.3.2</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Update to generate Word document
-      - Clean up undefined variable
+      - Take release dll
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
