@@ -15,8 +15,8 @@ namespace Xenirio.Component.Gutenberg
 		{
 			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
 		}
-
-		private WordprocessingDocument ReplaceDocument(WordprocessingDocument document)
+        
+		private void ReplaceDocument(WordprocessingDocument document)
 		{
 			// replace header variable
 			var headers = document.MainDocumentPart.HeaderParts.ToList();
@@ -34,9 +34,8 @@ namespace Xenirio.Component.Gutenberg
 			{
 				Replaces(footer.Footer.Descendants<FieldCode>().ToArray());
 			}
-			return document;
 		}
-
+        
 		public void Save(string filePath)
 		{
 			if (!File.Exists(filePath))
@@ -67,10 +66,12 @@ namespace Xenirio.Component.Gutenberg
                 var key = field.Text.Trim();
                 IReportReplaceable variable;
                 if (variables.ContainsKey(key))
+                {
                     variable = variables[key];
-                else
-                    variable = new ReportLabel() { Key = key, Value = ""};
-                variable.Replace((Run)field.Parent);
+                    //else
+                    //    variable = new ReportLabel() { Key = key, Value = ""};
+                    variable.Replace((Run)field.Parent);
+                }
             }
 		}
 	}
