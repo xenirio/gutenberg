@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Xenirio.Component.Gutenberg.Model;
 
 namespace Xenirio.Component.Gutenberg.Tests
 {
@@ -80,6 +81,83 @@ namespace Xenirio.Component.Gutenberg.Tests
             };
             report.setTableImage("Content.Image.Logo", byteLogos);
 
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Generate_Complex_Table_Report()
+        {
+            var template = Environment.CurrentDirectory + @"\Resources\SampleTableAdvance.docx";
+            var report = new ReportGenerator(template);
+            var byteBanner = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png");
+            report.InjectReportElement(new ReportTableComplex()
+            {
+                Key = "Content.Table.Rule",
+                Elements = new ReportElement[][] {
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Title", Value = "Rule 1" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "ABC" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Top", Value = "" }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Bottom", Value = "" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "DEF" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Top", Value = "" }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Bottom", Value = "" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Title", Value = "Rule 2" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "GHI" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Top", Value = "" }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Line.Bottom", Value = "" }
+                    },
+                }
+            });
             var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
             report.GenerateToFile(outputPath);
             Assert.IsTrue(File.Exists(outputPath));

@@ -1,6 +1,6 @@
 ﻿namespace Xenirio.Component.Gutenberg.Model
 {
-	internal abstract class ReportElement
+	public abstract class ReportElement
     {
 		public string Key { get; set; }
 

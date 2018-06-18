@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Xenirio.Component.Gutenberg
 {
-	internal class ReportDocument
+	public class ReportDocument
 	{
 		private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
 
@@ -15,28 +15,35 @@ namespace Xenirio.Component.Gutenberg
 		{
 			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
 		}
-
-		private WordprocessingDocument ReplaceDocument(WordprocessingDocument document)
+        
+		private void ReplaceDocument(WordprocessingDocument document)
 		{
 			// replace header variable
 			var headers = document.MainDocumentPart.HeaderParts.ToList();
 			foreach (var header in headers)
 			{
-				Replaces(header.Header.Descendants<FieldCode>().ToArray());
-			}
+                var headerFields = header.Header.Descendants<FieldCode>().ToArray();
+                Replace(headerFields);
+                Clean(headerFields);
 
-			// replace body variable
-			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray());
+            }
 
-			// replace footer variable
-			var footers = document.MainDocumentPart.FooterParts.ToList();
+            // replace body variable
+            var bodyFields = document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray();
+            Replace(bodyFields);
+            Clean(bodyFields);
+
+            // replace footer variable
+            var footers = document.MainDocumentPart.FooterParts.ToList();
 			foreach (var footer in footers)
 			{
-				Replaces(footer.Footer.Descendants<FieldCode>().ToArray());
+                var footerFields = footer.Footer.Descendants<FieldCode>().ToArray();
+                Replace(footerFields);
+                Clean(footerFields);
 			}
-			return document;
-		}
 
+        }
+        
 		public void Save(string filePath)
 		{
 			if (!File.Exists(filePath))
@@ -60,18 +67,35 @@ namespace Xenirio.Component.Gutenberg
 			}
 		}
 
-		private void Replaces(FieldCode[] fields)
+		private void Replace(FieldCode[] fields)
 		{
             foreach (var field in fields)
             {
                 var key = field.Text.Trim();
                 IReportReplaceable variable;
                 if (variables.ContainsKey(key))
+                {
                     variable = variables[key];
-                else
-                    variable = new ReportLabel() { Key = key, Value = ""};
-                variable.Replace((Run)field.Parent);
+                    variable.Replace((Run)field.Parent);
+                }
             }
-		}
+        }
+
+        private void Clean(FieldCode[] fields)
+        {
+            foreach (var field in fields)
+            {
+                var key = field.Text.Trim();
+                var varKey = key.Replace("DOCVARIABLE", "").Trim();
+                if (varKey.StartsWith("Template"))
+                {
+                    field.Ancestors<TableRow>().First().Remove();
+                }
+                else
+                {
+                    (new ReportLabel() { Key = key, Value = "" }).Replace((Run)field.Parent);
+                }
+            }
+        }
 	}
 }
