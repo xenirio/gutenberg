@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Xenirio.Component.Gutenberg.Model
@@ -37,10 +38,11 @@ namespace Xenirio.Component.Gutenberg.Model
     {
         public override void Replace(Run element)
         {
-            var table = (Table)element.Parent.Parent.Parent.Parent;
+            OpenXmlElement table = element;
+            while (table.GetType() != typeof(Table))
+                table = table.Parent;
             for (var i = 0; i < Elements.Length; i++)
             {
-                var tds = new List<TableCell>();
                 for (var j = 0; j < Elements[i].Length; j++)
                 {
                     var td = table.Descendants<TableRow>().ElementAt(i).Descendants<TableCell>().ElementAt(j);
@@ -48,15 +50,13 @@ namespace Xenirio.Component.Gutenberg.Model
                     
                     if (elem.GetType() == typeof(ReportTableComplex))
                     {
-                        var tmpTd = (TableCell)td.CloneNode(true);
-                        tds.Add(tmpTd);
-                        td = tmpTd;
+                        //var tmpTable = td.Descendants<Table>().First().CloneNode(true);
+                        td = (TableCell)td.CloneNode(true);
+                        table.AppendChild(new TableRow(td));
                     }
-                    Run run = td.GetFirstChild<Paragraph>().AppendChild<Run>(new Run());
+                    Run run = td.GetFirstChild<Paragraph>().GetFirstChild<Run>();
                     ((IReportReplaceable)elem).Replace(run);
                 }
-                var tr = new TableRow(tds);
-                table.AppendChild(tr);
             }
         }
     }
