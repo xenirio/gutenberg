@@ -22,19 +22,27 @@ namespace Xenirio.Component.Gutenberg
 			var headers = document.MainDocumentPart.HeaderParts.ToList();
 			foreach (var header in headers)
 			{
-				Replaces(header.Header.Descendants<FieldCode>().ToArray());
-			}
+                var headerFields = header.Header.Descendants<FieldCode>().ToArray();
+                Replace(headerFields);
+                Clean(headerFields);
 
-			// replace body variable
-			Replaces(document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray());
+            }
 
-			// replace footer variable
-			var footers = document.MainDocumentPart.FooterParts.ToList();
+            // replace body variable
+            var bodyFields = document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray();
+            Replace(bodyFields);
+            Clean(bodyFields);
+
+            // replace footer variable
+            var footers = document.MainDocumentPart.FooterParts.ToList();
 			foreach (var footer in footers)
 			{
-				Replaces(footer.Footer.Descendants<FieldCode>().ToArray());
+                var footerFields = footer.Footer.Descendants<FieldCode>().ToArray();
+                Replace(footerFields);
+                Clean(footerFields);
 			}
-		}
+
+        }
         
 		public void Save(string filePath)
 		{
@@ -59,7 +67,7 @@ namespace Xenirio.Component.Gutenberg
 			}
 		}
 
-		private void Replaces(FieldCode[] fields)
+		private void Replace(FieldCode[] fields)
 		{
             foreach (var field in fields)
             {
@@ -68,11 +76,26 @@ namespace Xenirio.Component.Gutenberg
                 if (variables.ContainsKey(key))
                 {
                     variable = variables[key];
-                    //else
-                    //    variable = new ReportLabel() { Key = key, Value = ""};
                     variable.Replace((Run)field.Parent);
                 }
             }
-		}
+        }
+
+        private void Clean(FieldCode[] fields)
+        {
+            foreach (var field in fields)
+            {
+                var key = field.Text.Trim();
+                var varKey = key.Replace("DOCVARIABLE", "").Trim();
+                if (varKey.StartsWith("Template"))
+                {
+                    field.Ancestors<TableRow>().First().Remove();
+                }
+                else
+                {
+                    (new ReportLabel() { Key = key, Value = "" }).Replace((Run)field.Parent);
+                }
+            }
+        }
 	}
 }

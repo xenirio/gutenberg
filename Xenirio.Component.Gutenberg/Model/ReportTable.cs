@@ -38,23 +38,23 @@ namespace Xenirio.Component.Gutenberg.Model
     {
         public override void Replace(Run element)
         {
-            OpenXmlElement table = element;
-            while (table.GetType() != typeof(Table))
-                table = table.Parent;
+            var body = element.Parent;
+            while (body.GetType() != typeof(Body))
+                body = body.Parent;
+            var parent = element.Parent.Parent;
+            var table = element.Parent.Parent.Parent.Parent;
+            table.Descendants<TableRow>().First().Remove();
             for (var i = 0; i < Elements.Length; i++)
             {
+                var tr = new TableRow();
+                table.AppendChild(tr);
                 for (var j = 0; j < Elements[i].Length; j++)
                 {
-                    var td = table.Descendants<TableRow>().ElementAt(i).Descendants<TableCell>().ElementAt(j);
                     var elem = Elements[i][j];
-                    
-                    if (elem.GetType() == typeof(ReportTableComplex))
-                    {
-                        //var tmpTable = td.Descendants<Table>().First().CloneNode(true);
-                        td = (TableCell)td.CloneNode(true);
-                        table.AppendChild(new TableRow(td));
-                    }
-                    Run run = td.GetFirstChild<Paragraph>().GetFirstChild<Run>();
+                    var template = (TableCell)body.Descendants<FieldCode>()
+                        .Where(f => f.Text.Trim() == string.Format(@"DOCVARIABLE  {0}", elem.Key)).Single().Parent.Parent.Parent.Clone();
+                    tr.AppendChild(template);
+                    var run = (Run)template.Descendants<FieldCode>().Single().Parent;
                     ((IReportReplaceable)elem).Replace(run);
                 }
             }

@@ -154,35 +154,36 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                 File.Delete(outfile);
             File.Copy(sourcefile, outfile);
 
+            var byteLogo = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png");
             var document = new ReportDocument();
             document.InjectReportElement(new ReportTableComplex()
             {
-                Key = "Table.Rule",
+                Key = "Content.Table.Rule",
                 Elements = new ReportElement[][] {
-                    new ReportElement[] {
-                        new ReportTableComplex() {
-                            Elements = new ReportElement[][]{
-                                new ReportLabel[] {
-                                    new ReportLabel() { Key = "Table.Rule.Title", Value = "Rule 1" }
-                                },
-                                new ReportTableComplex[] {
-                                    new ReportTableComplex() { Key = "Table.Rule.Entity",
-                                        Elements = new ReportElement[][]
-                                        {
-                                            new ReportLabel[] { new ReportLabel() { Key = "Table.Rule.Entity.Name", Value = "ABC" } },
-                                            new ReportTable[] {
-                                                new ReportTableComplex() { Key = "Table.Rule.Entity.Maps",
-                                                    Elements = new ReportImage[][]
-                                                    {
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Title", Value = "Rule 1" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "ABC" }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                    },
+                    new ReportImage[] {
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "DEF" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Title", Value = "Rule 2" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "GHI" }
+                    },
                 }
             });
             document.Save(outfile);
