@@ -3,7 +3,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	internal class ReportLabels : ReportElement, IReportReplaceable
+    public class ReportLabels : ReportElement, IReportReplaceable
 	{
 		public string[] Values
 		{

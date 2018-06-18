@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	internal class ReportTable : ReportElement, IReportReplaceable
+    public class ReportTable : ReportElement, IReportReplaceable
 	{
 		public ReportElement[][] Elements
 		{
@@ -11,7 +13,7 @@ namespace Xenirio.Component.Gutenberg.Model
 			set { SetValue(value); }
 		}
 
-		public void Replace(Run element)
+		public virtual void Replace(Run element)
 		{
             var tr = (TableRow)element.Parent.Parent.Parent;
 			tr.Descendants<Run>().ToList().ForEach(c => c.Remove());
@@ -31,4 +33,31 @@ namespace Xenirio.Component.Gutenberg.Model
 			tr.Remove();
 		}
 	}
+
+    public class ReportTableComplex : ReportTable
+    {
+        public override void Replace(Run element)
+        {
+            var body = element.Parent;
+            while (body.GetType() != typeof(Body))
+                body = body.Parent;
+            var parent = element.Parent.Parent;
+            var table = element.Parent.Parent.Parent.Parent;
+            table.Descendants<TableRow>().First().Remove();
+            for (var i = 0; i < Elements.Length; i++)
+            {
+                var tr = new TableRow();
+                table.AppendChild(tr);
+                for (var j = 0; j < Elements[i].Length; j++)
+                {
+                    var elem = Elements[i][j];
+                    var template = (TableCell)body.Descendants<FieldCode>()
+                        .Where(f => f.Text.Trim() == string.Format(@"DOCVARIABLE  {0}", elem.Key)).Single().Parent.Parent.Parent.Clone();
+                    tr.AppendChild(template);
+                    var run = (Run)template.Descendants<FieldCode>().Single().Parent;
+                    ((IReportReplaceable)elem).Replace(run);
+                }
+            }
+        }
+    }
 }

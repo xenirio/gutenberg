@@ -11,7 +11,7 @@ using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	internal class ReportImage : ReportElement, IReportReplaceable
+	public class ReportImage : ReportElement, IReportReplaceable
 	{
 		public byte[] Value
 		{

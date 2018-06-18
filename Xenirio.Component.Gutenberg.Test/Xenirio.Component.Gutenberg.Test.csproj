@@ -55,6 +55,9 @@
     <Compile Include="ReportGeneratorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SampleTableAdvance.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Sample.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

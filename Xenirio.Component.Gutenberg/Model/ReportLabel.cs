@@ -2,7 +2,7 @@
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	internal class ReportLabel : ReportElement, IReportReplaceable
+    public class ReportLabel : ReportElement, IReportReplaceable
 	{
 		public string Value
 		{
