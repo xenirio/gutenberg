@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Xenirio.Component.Gutenberg
 {
-	internal class ReportDocument
+	public class ReportDocument
 	{
 		private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
 

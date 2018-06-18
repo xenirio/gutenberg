@@ -5,7 +5,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	internal class ReportTable : ReportElement, IReportReplaceable
+    public class ReportTable : ReportElement, IReportReplaceable
 	{
 		public ReportElement[][] Elements
 		{
@@ -34,7 +34,7 @@ namespace Xenirio.Component.Gutenberg.Model
 		}
 	}
 
-    internal class ReportTableComplex : ReportTable
+    public class ReportTableComplex : ReportTable
     {
         public override void Replace(Run element)
         {

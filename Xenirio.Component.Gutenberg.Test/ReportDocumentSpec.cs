@@ -146,7 +146,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
         }
         
         [TestMethod]
-        public void Should_Generate_Complex_Table_Report()
+        public void Should_Replace_Complex_Table_Report()
         {
             var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleTableAdvance.docx";
             var outfile = Environment.CurrentDirectory + @"\Resources\SampleTableAdvanceTest.docx";
@@ -154,7 +154,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                 File.Delete(outfile);
             File.Copy(sourcefile, outfile);
 
-            var byteLogo = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png");
+            var byteBanner = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\banner.png");
             var document = new ReportDocument();
             document.InjectReportElement(new ReportTableComplex()
             {
@@ -167,13 +167,13 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                         new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "ABC" }
                     },
                     new ReportImage[] {
-                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
                     },
                     new ReportImage[] {
-                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
                     },
                     new ReportImage[] {
-                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteLogo }
+                        new ReportImage(){ Key = "Template.Rule.Entity.Map", Value = byteBanner }
                     },
                     new ReportLabel[] {
                         new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "DEF" }

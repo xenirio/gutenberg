@@ -67,6 +67,11 @@ namespace Xenirio.Component.Gutenberg
             _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
         }
 
+        public void InjectReportElement(ReportElement element)
+        {
+            _document.InjectReportElement(element);
+        }
+
         private void saveDocumentToFile(string filePath)
 		{
 			if (File.Exists(filePath))
