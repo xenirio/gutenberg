@@ -18,30 +18,27 @@ namespace Xenirio.Component.Gutenberg
         
 		private void ReplaceDocument(WordprocessingDocument document)
 		{
-			// replace header variable
+            var fields = new List<FieldCode>();
+
+			// header variable
 			var headers = document.MainDocumentPart.HeaderParts.ToList();
 			foreach (var header in headers)
 			{
-                var headerFields = header.Header.Descendants<FieldCode>().ToArray();
-                Replace(headerFields);
-                Clean(headerFields);
-
+                fields.AddRange(header.Header.Descendants<FieldCode>());
             }
 
-            // replace body variable
-            var bodyFields = document.MainDocumentPart.RootElement.Descendants<FieldCode>().ToArray();
-            Replace(bodyFields);
-            Clean(bodyFields);
+            // body variable
+            fields.AddRange(document.MainDocumentPart.RootElement.Descendants<FieldCode>());
 
-            // replace footer variable
+            // footer variable
             var footers = document.MainDocumentPart.FooterParts.ToList();
 			foreach (var footer in footers)
 			{
-                var footerFields = footer.Footer.Descendants<FieldCode>().ToArray();
-                Replace(footerFields);
-                Clean(footerFields);
+                fields.AddRange(footer.Footer.Descendants<FieldCode>().ToArray());
 			}
 
+            Replace(fields.ToArray());
+            Clean(fields.ToArray());
         }
         
 		public void Save(string filePath)
@@ -69,6 +66,10 @@ namespace Xenirio.Component.Gutenberg
 
 		private void Replace(FieldCode[] fields)
 		{
+            var codes = fields.Select(f => f.Text.Trim()).ToArray();
+            var intersectFields = variables.Select(v => v.Key).Intersect(codes);
+            if (variables.Count > intersectFields.Count())
+                throw new KeyNotFoundException("Variables not match with Fields");
             foreach (var field in fields)
             {
                 var key = field.Text.Trim();
