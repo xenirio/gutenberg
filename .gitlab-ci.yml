@@ -18,7 +18,6 @@ build_job:
   stage: build
   only:
     - tags
-    - master
   script:
     - '"%NUGET_PATH%" restore' # restore Nuget dependencies
     - '"%MSBUILD_PATH%" %PROJECT%.sln /p:Configuration=Release' # build the project
@@ -32,7 +31,6 @@ test_job:
   stage: test
   only:
     - tags
-    - master
   script:
     - '"%MSTEST_PATH%" %TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
   artifacts:
