@@ -16,31 +16,6 @@ namespace Xenirio.Component.Gutenberg
 			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
 		}
         
-		private void ReplaceDocument(WordprocessingDocument document)
-		{
-            var fields = new List<FieldCode>();
-
-			// header variable
-			var headers = document.MainDocumentPart.HeaderParts.ToList();
-			foreach (var header in headers)
-			{
-                fields.AddRange(header.Header.Descendants<FieldCode>());
-            }
-
-            // body variable
-            fields.AddRange(document.MainDocumentPart.RootElement.Descendants<FieldCode>());
-
-            // footer variable
-            var footers = document.MainDocumentPart.FooterParts.ToList();
-			foreach (var footer in footers)
-			{
-                fields.AddRange(footer.Footer.Descendants<FieldCode>().ToArray());
-			}
-
-            Replace(fields.ToArray());
-            Clean(fields.ToArray());
-        }
-        
 		public void Save(string filePath)
 		{
 			if (!File.Exists(filePath))
@@ -64,9 +39,37 @@ namespace Xenirio.Component.Gutenberg
 			}
 		}
 
-		private void Replace(FieldCode[] fields)
+        private void ReplaceDocument(WordprocessingDocument document)
+        {
+            var paragraphs = new List<Paragraph>();
+
+            // header variable
+            paragraphs.AddRange(document.MainDocumentPart.HeaderParts.SelectMany(h => h.Header.Descendants<Paragraph>()));
+            // body variable
+            paragraphs.AddRange(document.MainDocumentPart.RootElement.Descendants<Paragraph>());
+            // footer variable
+            paragraphs.AddRange(document.MainDocumentPart.FooterParts.SelectMany(f => f.Footer.Descendants<Paragraph>()));
+
+            foreach(var paragraph in paragraphs)
+            {
+                if (paragraph.Descendants<FieldCode>().Any())
+                {
+                    var code = paragraph.InnerText.Trim();
+                    paragraph.RemoveAllChildren<Run>();
+                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
+                    paragraph.Append(new Run(new FieldCode(code)));
+                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
+                }
+            }
+
+            var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>());
+            Replace(fields.ToArray());
+            Clean(fields.ToArray());
+        }
+
+        private void Replace(FieldCode[] fields)
 		{
-            var codes = fields.Select(f => f.Text.Trim()).ToArray();
+            var codes = fields.Select(f => f.Text.Trim()).Distinct().ToArray();
             var intersectFields = variables.Select(v => v.Key).Intersect(codes);
             if (variables.Count > intersectFields.Count())
                 throw new KeyNotFoundException("Variables not match with Fields");
