@@ -58,7 +58,9 @@
     <Compile Include="FragmentedVariableSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SampleError.docx" />
+    <None Include="Resources\SampleFragmentedVariable.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\SampleTableAdvance.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
