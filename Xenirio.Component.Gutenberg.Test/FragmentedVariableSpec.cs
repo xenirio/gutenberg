@@ -14,8 +14,8 @@ namespace Xenirio.Component.Gutenberg.Test
         {
             try
             {
-                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleError.docx";
-                var outfile = Environment.CurrentDirectory + @"\Resources\SampleTest.docx";
+                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariable.docx";
+                var outfile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariableTest.docx";
                 if (File.Exists(outfile))
                     File.Delete(outfile);
                 File.Copy(sourcefile, outfile);
@@ -36,8 +36,8 @@ namespace Xenirio.Component.Gutenberg.Test
         {
             try
             {
-                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleError.docx";
-                var outfile = Environment.CurrentDirectory + @"\Resources\SampleTableTest.docx";
+                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariable.docx";
+                var outfile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariableTest.docx";
                 if (File.Exists(outfile))
                     File.Delete(outfile);
                 File.Copy(sourcefile, outfile);
@@ -73,8 +73,8 @@ namespace Xenirio.Component.Gutenberg.Test
         {
             try
             {
-                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleError.docx";
-                var outfile = Environment.CurrentDirectory + @"\Resources\SampleTest.docx";
+                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariable.docx";
+                var outfile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariableTest.docx";
                 if (File.Exists(outfile))
                     File.Delete(outfile);
                 File.Copy(sourcefile, outfile);
@@ -93,30 +93,30 @@ namespace Xenirio.Component.Gutenberg.Test
 
         }
 
-        //[TestMethod]
-        //public void Incorrect_VariableSize_ThrowArgumentOut()
-        //{
-        //    try
-        //    {
-        //        var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleError.docx";
-        //        var outfile = Environment.CurrentDirectory + @"\Resources\SampleTest.docx";
-        //        if (File.Exists(outfile))
-        //            File.Delete(outfile);
-        //        File.Copy(sourcefile, outfile);
-        //        var document = new ReportDocument();
+        [TestMethod]
+        public void Incorrect_VariableSize_ThrowArgumentOut()
+        {
+            try
+            {
+                var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariable.docx";
+                var outfile = Environment.CurrentDirectory + @"\Resources\SampleFragmentedVariableTest.docx";
+                if (File.Exists(outfile))
+                    File.Delete(outfile);
+                File.Copy(sourcefile, outfile);
+                var document = new ReportDocument();
 
-        //        document.InjectReportElement(new ReportLabels() { Key = "Entity.Name", Values = new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" } });
+                document.InjectReportElement(new ReportLabels() { Key = "Entity.Name", Values = new string[] { "IPO of Ezra Holdings Limited", "IPO of Ezra" } });
 
 
-        //        document.Save(outfile);
+                document.Save(outfile);
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Assert.AreEqual("An item with the same key has already been added.", e.Message);
-        //    }
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("An item with the same key has already been added.", e.Message);
+            }
 
-        //}
+        }
 
 
 
