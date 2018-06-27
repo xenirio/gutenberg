@@ -7,37 +7,37 @@ using System.Linq;
 
 namespace Xenirio.Component.Gutenberg
 {
-	public class ReportDocument
-	{
-		private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
+    public class ReportDocument
+    {
+        private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
 
-		public void InjectReportElement(ReportElement element)
-		{
-			variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
-		}
-        
-		public void Save(string filePath)
-		{
-			if (!File.Exists(filePath))
-				throw new FileNotFoundException("File not found", filePath);
-			var document = WordprocessingDocument.Open(filePath, true);
-			ReplaceDocument(document);
-			document.Close();
-		}
+        public void InjectReportElement(ReportElement element)
+        {
+            variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
+        }
 
-		public byte[] Save(byte[] bytes)
-		{
-			using (MemoryStream mem = new MemoryStream())
-			{
-				mem.Write(bytes, 0, bytes.Length);
-				using (WordprocessingDocument document = WordprocessingDocument.Open(mem, true))
-				{
-					ReplaceDocument(document);
-					document.Close();
-					return mem.ToArray();
-				}
-			}
-		}
+        public void Save(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("File not found", filePath);
+            var document = WordprocessingDocument.Open(filePath, true);
+            ReplaceDocument(document);
+            document.Close();
+        }
+
+        public byte[] Save(byte[] bytes)
+        {
+            using (MemoryStream mem = new MemoryStream())
+            {
+                mem.Write(bytes, 0, bytes.Length);
+                using (WordprocessingDocument document = WordprocessingDocument.Open(mem, true))
+                {
+                    ReplaceDocument(document);
+                    document.Close();
+                    return mem.ToArray();
+                }
+            }
+        }
 
         private void ReplaceDocument(WordprocessingDocument document)
         {
@@ -50,16 +50,13 @@ namespace Xenirio.Component.Gutenberg
             // footer variable
             paragraphs.AddRange(document.MainDocumentPart.FooterParts.SelectMany(f => f.Footer.Descendants<Paragraph>()));
 
-            foreach(var paragraph in paragraphs)
+            foreach (var paragraph in paragraphs.Where(p => p.Descendants<FieldCode>().Any()))
             {
-                if (paragraph.Descendants<FieldCode>().Any())
-                {
-                    var code = paragraph.InnerText.Trim();
-                    paragraph.RemoveAllChildren<Run>();
-                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
-                    paragraph.Append(new Run(new FieldCode(code)));
-                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
-                }
+                var code = paragraph.InnerText.Trim();
+                paragraph.RemoveAllChildren<Run>();
+                paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
+                paragraph.Append(new Run(new FieldCode(code)));
+                paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
             }
 
             var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>());
@@ -68,7 +65,7 @@ namespace Xenirio.Component.Gutenberg
         }
 
         private void Replace(FieldCode[] fields)
-		{
+        {
             var codes = fields.Select(f => f.Text.Trim()).Distinct().ToArray();
             var intersectFields = variables.Select(v => v.Key).Intersect(codes);
             if (variables.Count > intersectFields.Count())
@@ -101,5 +98,5 @@ namespace Xenirio.Component.Gutenberg
                 }
             }
         }
-	}
+    }
 }
