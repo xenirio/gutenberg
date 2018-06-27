@@ -23,12 +23,12 @@ build_job:
     - web
   script:
     - '"%NUGET_PATH%" restore' # restore Nuget dependencies
-    - 'cd .\%PROJECT_FOLDER%'
-    - '"%MSBUILD_PATH%" /p:Configuration=Release' # build the project
+    - '"%MSBUILD_PATH%" %PROJECT%.sln /p:Configuration=Release' # build the project
   artifacts:
     expire_in: 1 week # save gitlab server space, we copy the files we need to deploy folder later on
     paths: #artifacts paths will leave files inside that describe below as 'artifacts' and will not remove when starting of next stage
       - '%PROJECT_FOLDER%/bin/'
+      - '%PROJECT_FOLDER%.Test/bin/'
 
 test_job:
   stage: test
@@ -38,7 +38,7 @@ test_job:
     - master
     - web
   script:
-    - '"%MSTEST_PATH%" .\%TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
+    - '"%MSTEST_PATH%" %TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
   artifacts:
     expire_in: 1 week
     paths:
