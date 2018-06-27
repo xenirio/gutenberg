@@ -38,7 +38,7 @@ test_job:
     - master
     - web
   script:
-    - '%MSTEST_PATH% .\%TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
+    - '"%MSTEST_PATH%" .\%TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
   artifacts:
     expire_in: 1 week
     paths:
