@@ -42,6 +42,7 @@ test_job:
   artifacts:
     expire_in: 1 week
     paths:
+      - '%PROJECT%/bin/'
       - 'TestResults/'
   dependencies:
     - build_job
