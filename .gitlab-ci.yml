@@ -1,8 +1,6 @@
 variables:
   PROJECT: 'Xenirio.Component.Gutenberg'
   TEST_AT: 'Xenirio.Component.Gutenberg.Test\bin\Release'
-  DEPLOY_AT: 'https://handshakes-nuget.azurewebsites.net/nuget'
-  DEPLOY_KEY: '9B0904D2-FD50-48CE-9891-7091E956B697'
   
   NUGET_PATH: 'C:\NuGet\nuget.exe'
   MSBUILD_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe'
