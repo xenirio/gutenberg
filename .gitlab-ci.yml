@@ -3,8 +3,8 @@ variables:
   TEST_AT: 'Xenirio.Component.Gutenberg.Test\bin\Release'
   
   NUGET_PATH: 'C:\NuGet\nuget.exe'
-  MSBUILD_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe'
-  MSTEST_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe'
+  MSBUILD_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe'
+  MSTEST_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\TestAgent\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe'
 
 stages:
   - build
@@ -14,8 +14,12 @@ stages:
 
 build_job:
   stage: build
-  only:
-    - tags
+  tags:
+    - 'gutenberg'
+    - 'nuget'
+    - 'powershell'
+  #only:
+  #  - tags
   script:
     - '"%NUGET_PATH%" restore' # restore Nuget dependencies
     - '"%MSBUILD_PATH%" %PROJECT%.sln /p:Configuration=Release' # build the project
@@ -27,6 +31,10 @@ build_job:
 
 test_job:
   stage: test
+  tags:
+    - 'gutenberg'
+    - 'nuget'
+    - 'powershell'
   only:
     - tags
   script:
@@ -41,8 +49,12 @@ test_job:
 
 pack_job:
   stage: pack
-  only:
-    - tags
+  tags:
+    - 'gutenberg'
+    - 'nuget'
+    - 'powershell'
+  #only:
+  #  - tags
   script:
     - '"%NUGET_PATH%" pack .\%PROJECT%\%PROJECT%.nuspec'
   artifacts:
@@ -55,6 +67,10 @@ pack_job:
 
 deploy_job:
   stage: deploy
+  tags:
+    - 'gutenberg'
+    - 'nuget'
+    - 'powershell'
   only:
     - tags
   script:
