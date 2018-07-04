@@ -14,11 +14,11 @@ stages:
 build_job:
   stage: build
   tags:
-    - 'gutenberg'
-    - 'nuget'
-    - 'powershell'
-  #only:
-  #  - tags
+    - gutenberg
+    - nuget
+    - powershell
+  only:
+    - tags
   script:
     - '"%NUGET_PATH%" restore %PROJECT%\packages.config -PackagesDirectory .\packages'
     - '"%MSBUILD_PATH%" %PROJECT%\%PROJECT%.csproj /p:Configuration=Release'
@@ -30,11 +30,11 @@ build_job:
 test_job:
   stage: test
   tags:
-    - 'gutenberg'
-    - 'nuget'
-    - 'powershell'
-  #only:
-  #  - tags
+    - gutenberg
+    - nuget
+    - powershell
+  only:
+    - tags
   script:
     - '"%NUGET_PATH%" restore %PROJECT%.Test\packages.config -PackagesDirectory .\packages'
     - '"%MSBUILD_PATH%" %PROJECT%.Test\%PROJECT%.Test.csproj /p:Configuration=Release'
@@ -50,9 +50,9 @@ test_job:
 pack_job:
   stage: pack
   tags:
-    - 'gutenberg'
-    - 'nuget'
-    - 'powershell'
+    - gutenberg
+    - nuget
+    - powershell
   only:
     - tags
   script:
@@ -68,9 +68,9 @@ pack_job:
 deploy_job:
   stage: deploy
   tags:
-    - 'gutenberg'
-    - 'nuget'
-    - 'powershell'
+    - gutenberg
+    - nuget
+    - powershell
   only:
     - tags
   script:
