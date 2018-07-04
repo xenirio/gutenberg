@@ -20,7 +20,7 @@ build_job:
   #only:
   #  - tags
   script:
-    - '"%NUGET_PATH%" restore'
+    - '"%NUGET_PATH%" restore %PROJECT%\'
     - '"%MSBUILD_PATH%" %PROJECT%\%PROJECT%.csproj /p:Configuration=Release'
   artifacts:
     expire_in: 1 week # save gitlab server space, we copy the files we need to deploy folder later on
@@ -36,6 +36,7 @@ test_job:
   #only:
   #  - tags
   script:
+    - '"%NUGET_PATH%" restore %PROJECT%.Test\'
     - '"%MSBUILD_PATH%" %PROJECT%.Test\%PROJECT%.Test.csproj /p:Configuration=Release'
     - '"%MSTEST_PATH%" %PROJECT%.Test\bin\Release\%PROJECT%.Test.dll'
   artifacts:
