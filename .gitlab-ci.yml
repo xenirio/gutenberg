@@ -1,6 +1,5 @@
 variables:
   PROJECT: 'Xenirio.Component.Gutenberg'
-  TEST_AT: 'Xenirio.Component.Gutenberg.Test\bin\Release'
   
   NUGET_PATH: 'C:\NuGet\nuget.exe'
   MSBUILD_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe'
@@ -21,13 +20,12 @@ build_job:
   #only:
   #  - tags
   script:
-    - '"%NUGET_PATH%" restore' # restore Nuget dependencies
-    - '"%MSBUILD_PATH%" %PROJECT%.sln /p:Configuration=Release' # build the project
+    - '"%NUGET_PATH%" restore'
+    - '"%MSBUILD_PATH%" %PROJECT%\%PROJECT%.csproj /p:Configuration=Release'
   artifacts:
     expire_in: 1 week # save gitlab server space, we copy the files we need to deploy folder later on
     paths: #artifacts paths will leave files inside that describe below as 'artifacts' and will not remove when starting of next stage
       - '%PROJECT%/bin/'
-      - '%PROJECT%.Test/bin/'
 
 test_job:
   stage: test
@@ -38,7 +36,8 @@ test_job:
   only:
     - tags
   script:
-    - '"%MSTEST_PATH%" %TEST_AT%\Xenirio.Component.Gutenberg.Test.dll' # running unit tests
+    - '"%MSBUILD_PATH%" %PROJECT%.Test\%PROJECT%.Test.csproj /p:Configuration=Release'
+    - '"%MSTEST_PATH%" %PROJECT%.Test\bin\Release\%PROJECT%.Test.dll'
   artifacts:
     expire_in: 1 week
     paths:
