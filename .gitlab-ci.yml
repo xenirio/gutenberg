@@ -33,8 +33,8 @@ test_job:
     - 'gutenberg'
     - 'nuget'
     - 'powershell'
-  only:
-    - tags
+  #only:
+  #  - tags
   script:
     - '"%MSBUILD_PATH%" %PROJECT%.Test\%PROJECT%.Test.csproj /p:Configuration=Release'
     - '"%MSTEST_PATH%" %PROJECT%.Test\bin\Release\%PROJECT%.Test.dll'
@@ -52,8 +52,8 @@ pack_job:
     - 'gutenberg'
     - 'nuget'
     - 'powershell'
-  #only:
-  #  - tags
+  only:
+    - tags
   script:
     - '"%NUGET_PATH%" pack .\%PROJECT%\%PROJECT%.nuspec'
   artifacts:
