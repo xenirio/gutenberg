@@ -186,7 +186,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
         }
 
         [TestMethod]
-        public void Should_Replace_Complex_Table_Report()
+        public void Should_Replace_Complex_Table()
         {
             var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleTableAdvance.docx";
             var outfile = Environment.CurrentDirectory + @"\Resources\SampleTableAdvanceTest.docx";
@@ -224,6 +224,56 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                     new ReportLabel[] {
                         new ReportLabel(){ Key = "Template.Rule.Entity.Name", Value = "GHI" }
                     },
+                }
+            });
+            document.Save(outfile);
+        }
+
+        [TestMethod]
+        public void Should_Replace_Apply_Table()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleApplyTable.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleApplyTableTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportTable()
+            {
+                Key = "Content.Rule.Header",
+                Elements = new ReportLabel[][] {
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "Application ID" },
+                        new ReportLabel() { Value = "Company UEN" }
+                    }
+                }
+            });
+            document.InjectReportElement(new ReportTable()
+            {
+                Key = "Content.Rule.Title2",
+                Elements = new ReportLabel[][] {
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "The following are applicants/claimants with the same phone number" }
+                    }
+                }
+            });
+            document.InjectReportElement(new ReportTable()
+            {
+                Key = "Content.Rule.Table2",
+                Elements = new ReportLabel[][] {
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "000" },
+                        new ReportLabel() { Value = "AAA" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "001" },
+                        new ReportLabel() { Value = "AAB" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "002" },
+                        new ReportLabel() { Value = "AAC" }
+                    }
                 }
             });
             document.Save(outfile);

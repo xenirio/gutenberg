@@ -87,14 +87,17 @@ namespace Xenirio.Component.Gutenberg
             foreach (var field in fields)
             {
                 var key = field.Text.Trim();
-                var varKey = key.Replace("DOCVARIABLE", "").Trim();
-                if (varKey.StartsWith("Template"))
+                if (!variables.ContainsKey(key))
                 {
-                    field.Ancestors<TableRow>().First().Remove();
-                }
-                else
-                {
-                    (new ReportLabel() { Key = key, Value = "" }).Replace((Run)field.Parent);
+                    var elem = field.Ancestors<Paragraph>().Single();
+                    if (elem.Parent.GetType() == typeof(TableCell))
+                    {
+                        elem.Parent.Parent.Remove();
+                    }
+                    else
+                    {
+                        (new ReportLabel() { Key = key, Value = "" }).Replace((Run)field.Parent);
+                    }
                 }
             }
         }
