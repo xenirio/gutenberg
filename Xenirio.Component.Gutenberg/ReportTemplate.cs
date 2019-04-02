@@ -77,7 +77,13 @@ namespace Xenirio.Component.Gutenberg
                     var elem = field.Ancestors<Paragraph>().Single();
                     if (elem.Parent.GetType() == typeof(TableCell))
                     {
-                        elem.Parent.Parent.Remove();
+                        try
+                        {
+                            elem.Parent.Parent.Remove();
+                        } catch
+                        {
+                            // Ignore in case cannot remove
+                        }
                     }
                     else
                     {
