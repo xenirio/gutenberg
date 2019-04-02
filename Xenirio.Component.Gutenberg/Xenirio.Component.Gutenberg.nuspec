@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.4.3</version>
+    <version>1.5.0</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Support Apply Table
+      - Add basic template support
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
