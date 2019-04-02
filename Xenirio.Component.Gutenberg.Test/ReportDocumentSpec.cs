@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Xenirio.Component.Gutenberg.Tests
 {
@@ -276,6 +278,39 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                     }
                 }
             });
+            document.Save(outfile);
+        }
+
+        [TestMethod]
+        public void Should_Replace_Report_Template()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleContentTemplate.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleContentTemplateTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var data = new string[][]{
+                new string[] { "Fire Bolt", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante tellus, porttitor sit amet pretium ut, luctus sed lorem. Praesent viverra accumsan porta. Mauris ante magna, condimentum in vestibulum efficitur, maximus at justo. Nulla eget nisi in dolor mollis tempus vitae sit amet lorem", "16" },
+                new string[] { "Thunder Storm", "Pellentesque felis magna, congue et dolor quis, sagittis tristique nulla. Etiam tincidunt eleifend justo, at rhoncus nisi efficitur ac. Cras ipsum tellus, ultrices vitae nulla vel, posuere rhoncus leo. Aliquam volutpat erat nulla. Nam non elementum augue, sit amet tempor lorem", "12" },
+                new string[] { "Cold Snap", "Curabitur vel turpis imperdiet, dignissim nulla at, dignissim orci. Fusce rutrum congue mauris, eget pulvinar est laoreet id. Vestibulum lobortis, mauris et varius condimentum, lectus risus bibendum dui, eget sodales lectus justo nec nibh. Sed ullamcorper magna et neque suscipit efficitur", "24" }
+            }.Select(r =>
+            {
+                var result = new Dictionary<string, IReportReplaceable>();
+                result["Skill.Name"] = new ReportLabel() { Key = "Skill.Name", Value = r[0] };
+                result["Skill.Effect"] = new ReportLabel() { Key = "Skill.Effect", Value = r[1] };
+                result["Skill.Cost"] = new ReportLabel() { Key = "Skill.Cost", Value = r[2] };
+
+                return result;
+            }).ToArray();
+            
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportTemplateElement()
+            {
+                Key = "Content.Skills",
+                TemplateKey = "Skill",
+                Value = data
+            });
+            document.RegisterTemplate("Skill");
             document.Save(outfile);
         }
     }

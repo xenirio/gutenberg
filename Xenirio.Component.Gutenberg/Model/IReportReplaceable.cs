@@ -2,7 +2,7 @@
 
 namespace Xenirio.Component.Gutenberg.Model
 {
-	interface IReportReplaceable
+	public interface IReportReplaceable
 	{
 		void Replace(Run element);
     }
