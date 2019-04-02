@@ -4,16 +4,23 @@ using Xenirio.Component.Gutenberg.Model;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace Xenirio.Component.Gutenberg
 {
     public class ReportDocument
     {
         private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
+        private Dictionary<string, ReportTemplate> templates = new Dictionary<string, ReportTemplate>();
 
         public void InjectReportElement(ReportElement element)
         {
             variables.Add(string.Format(@"DOCVARIABLE  {0}", element.Key), (IReportReplaceable)element);
+        }
+
+        public void RegisterTemplate(string templateName)
+        {
+            templates.Add(templateName, new ReportTemplate(templateName));
         }
 
         public void Save(string filePath)
@@ -21,6 +28,7 @@ namespace Xenirio.Component.Gutenberg
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("File not found", filePath);
             var document = WordprocessingDocument.Open(filePath, true);
+            CompileTemplate(document);
             ReplaceDocument(document);
             document.Close();
         }
@@ -36,6 +44,14 @@ namespace Xenirio.Component.Gutenberg
                     document.Close();
                     return mem.ToArray();
                 }
+            }
+        }
+
+        private void CompileTemplate(WordprocessingDocument document)
+        {
+            foreach (var template in templates.Values)
+            {
+                template.Compile(document);
             }
         }
 
@@ -77,7 +93,18 @@ namespace Xenirio.Component.Gutenberg
                 if (variables.ContainsKey(key))
                 {
                     variable = variables[key];
-                    variable.Replace((Run)field.Parent);
+                    if (variable is ReportTemplateElement)
+                    {
+                        var element = variable as ReportTemplateElement;
+                        if (templates.ContainsKey(element.TemplateKey))
+                        {
+                            templates[element.TemplateKey].Apply(field.Ancestors<Paragraph>().Single(), element.Value);
+                        }
+                        else
+                            throw new KeyNotFoundException($"Not found template key {element.TemplateKey}");
+                    }
+                    else
+                        variable.Replace((Run)field.Parent);
                 }
             }
         }

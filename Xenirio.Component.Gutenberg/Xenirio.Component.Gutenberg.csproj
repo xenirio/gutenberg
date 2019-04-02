@@ -56,9 +56,11 @@
     <Compile Include="Model\ReportLabel.cs" />
     <Compile Include="Model\ReportLabels.cs" />
     <Compile Include="Model\ReportTable.cs" />
+    <Compile Include="Model\ReportTemplateElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDocument.cs" />
     <Compile Include="ReportGenerator.cs" />
+    <Compile Include="ReportTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
