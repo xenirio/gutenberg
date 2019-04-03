@@ -2,15 +2,14 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Add Support New Line Charactor to Label Element
-      - Provide More Detail when Crashed With KeyNotFoundException
+      - Reduce complexity of Value Properties of ReportTemplateElement
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
