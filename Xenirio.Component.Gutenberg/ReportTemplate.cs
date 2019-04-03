@@ -21,10 +21,21 @@ namespace Xenirio.Component.Gutenberg
             Name = templateName;
         }
 
-        internal void Apply(OpenXmlElement replacedElement, Dictionary<string, IReportReplaceable>[] templateValues)
+        internal void Apply(OpenXmlElement replacedElement, IReportReplaceable[][] templateValues)
         {
+            var templateValuesDicts = new List<Dictionary<string, IReportReplaceable>>();
+            foreach(var row in templateValues)
+            {
+                var rowDict = new Dictionary<string, IReportReplaceable>();
+                foreach(var item in row)
+                {
+                    rowDict.Add((item as ReportElement).Key, item);
+                }
+                templateValuesDicts.Add(rowDict);
+            }
+
             var paragraphs = new List<Paragraph>();
-            foreach (var rowValue in templateValues) {
+            foreach (var rowValue in templateValuesDicts) {
                 var dRootElement = rootElement.Clone() as Body;
                 paragraphs.AddRange(dRootElement.Descendants<Paragraph>());
 

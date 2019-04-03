@@ -10,7 +10,7 @@ namespace Xenirio.Component.Gutenberg.Model
     public class ReportTemplateElement : ReportElement, IReportReplaceable
     {
         public string TemplateKey { get; set; }
-        public Dictionary<string, IReportReplaceable>[] Value { get; set; } 
+        public IReportReplaceable[][] Value { get; set; } 
 
         public void Replace(Run element)
         {

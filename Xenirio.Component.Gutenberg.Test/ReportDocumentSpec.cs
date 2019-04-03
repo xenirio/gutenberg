@@ -295,12 +295,12 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                 new string[] { "Cold Snap", "Curabitur vel turpis imperdiet, dignissim nulla at, dignissim orci. Fusce rutrum congue mauris, eget pulvinar est laoreet id. Vestibulum lobortis, mauris et varius condimentum, lectus risus bibendum dui, eget sodales lectus justo nec nibh. Sed ullamcorper magna et neque suscipit efficitur", "24" }
             }.Select(r =>
             {
-                var result = new Dictionary<string, IReportReplaceable>();
-                result["Skill.Name"] = new ReportLabel() { Key = "Skill.Name", Value = r[0] };
-                result["Skill.Effect"] = new ReportLabel() { Key = "Skill.Effect", Value = r[1] };
-                result["Skill.Cost"] = new ReportLabel() { Key = "Skill.Cost", Value = r[2] };
+                var result = new List<IReportReplaceable>();
+                result.Add(new ReportLabel() { Key = "Skill.Name", Value = r[0] });
+                result.Add(new ReportLabel() { Key = "Skill.Effect", Value = r[1] });
+                result.Add(new ReportLabel() { Key = "Skill.Cost", Value = r[2] });
 
-                return result;
+                return result.ToArray();
             }).ToArray();
             
             var document = new ReportDocument();
