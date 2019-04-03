@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Xenirio.Component.Gutenberg.Model
@@ -22,7 +23,14 @@ namespace Xenirio.Component.Gutenberg.Model
 				var tmpParagraph = (Paragraph)paragraph.Clone();
 				root.InsertAfter(tmpParagraph, elementAt);
 				elementAt = tmpParagraph;
-				tmpParagraph.AppendChild(new Run(new Text(Values[i])));
+                var token = Values[i].Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                for (var j = 0; j < token.Length; j++)
+                {
+                    tmpParagraph.AppendChild(new Run(new Text(token[j])));
+                    if (j < token.Length - 1)
+                        tmpParagraph.AppendChild(new Run(new Break()));
+                }
+				
 			}
 			paragraph.Remove();
 		}
