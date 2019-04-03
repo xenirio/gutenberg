@@ -313,5 +313,32 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             document.RegisterTemplate("Skill");
             document.Save(outfile);
         }
+
+        [TestMethod]
+        public void Should_Support_New_Line_Charactor()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleLabel.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleLabelTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Text.SingleLabel",
+                Value = "Hello\r\nสวัสดี\r\nこんにちは"
+            });
+            document.InjectReportElement(new ReportLabels()
+            {
+                Key = "Content.Text.MultipleLabel",
+                Values = new string[]
+                {
+                    "Don't say anything\r\nอย่ามาพูดอะไรทั้งนั้นนะ\r\n何も言うな",
+                    "You deserve it\r\nสมน้ำหน้า\r\nさまみろ！",
+                    "さらば、俺の友よ"
+                }
+            });
+            document.Save(outfile);
+        }
     }
 }

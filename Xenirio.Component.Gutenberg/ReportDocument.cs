@@ -85,7 +85,7 @@ namespace Xenirio.Component.Gutenberg
             var codes = fields.Select(f => f.Text.Trim()).Distinct().ToArray();
             var intersectFields = variables.Select(v => v.Key).Intersect(codes);
             if (variables.Count > intersectFields.Count())
-                throw new KeyNotFoundException("Variables not match with Fields");
+                throw new KeyNotFoundException($"Variables not match with Fields. Expect = {string.Join(",", variables.Keys)}, Actual In Report = {string.Join(",", codes)}");
             foreach (var field in fields)
             {
                 var key = field.Text.Trim();
