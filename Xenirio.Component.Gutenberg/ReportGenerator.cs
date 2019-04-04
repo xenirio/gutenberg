@@ -67,6 +67,11 @@ namespace Xenirio.Component.Gutenberg
             _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
         }
 
+        public void registerTemplate(string templateName)
+        {
+            _document.RegisterTemplate(templateName);
+        }
+
         public void InjectReportElement(ReportElement element)
         {
             _document.InjectReportElement(element);

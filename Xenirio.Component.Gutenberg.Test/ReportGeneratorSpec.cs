@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using Xenirio.Component.Gutenberg.Model;
 
 namespace Xenirio.Component.Gutenberg.Tests
@@ -158,6 +159,38 @@ namespace Xenirio.Component.Gutenberg.Tests
                     },
                 }
             });
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Replace_Report_Template()
+        {
+            var template = Environment.CurrentDirectory + @"\Resources\SampleContentTemplate.docx";
+            var report = new ReportGenerator(template);
+            var data = new string[][]{
+                new string[] { "Fire Bolt", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante tellus, porttitor sit amet pretium ut, luctus sed lorem. Praesent viverra accumsan porta. Mauris ante magna, condimentum in vestibulum efficitur, maximus at justo. Nulla eget nisi in dolor mollis tempus vitae sit amet lorem", "16" },
+                new string[] { "Thunder Storm", "Pellentesque felis magna, congue et dolor quis, sagittis tristique nulla. Etiam tincidunt eleifend justo, at rhoncus nisi efficitur ac. Cras ipsum tellus, ultrices vitae nulla vel, posuere rhoncus leo. Aliquam volutpat erat nulla. Nam non elementum augue, sit amet tempor lorem", "12" },
+                new string[] { "Cold Snap", "Curabitur vel turpis imperdiet, dignissim nulla at, dignissim orci. Fusce rutrum congue mauris, eget pulvinar est laoreet id. Vestibulum lobortis, mauris et varius condimentum, lectus risus bibendum dui, eget sodales lectus justo nec nibh. Sed ullamcorper magna et neque suscipit efficitur", "24" }
+            }.Select(r =>
+            {
+                var result = new List<IReportReplaceable>();
+                result.Add(new ReportLabel() { Key = "Skill.Name", Value = r[0] });
+                result.Add(new ReportLabel() { Key = "Skill.Effect", Value = r[1] });
+                result.Add(new ReportLabel() { Key = "Skill.Cost", Value = r[2] });
+
+                return result.ToArray();
+            }).ToArray();
+
+            report.InjectReportElement(new ReportTemplateElement()
+            {
+                Key = "Content.Skills",
+                TemplateKey = "Skill",
+                Value = data
+            });
+            report.registerTemplate("Skill");
+
             var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
             report.GenerateToFile(outputPath);
             Assert.IsTrue(File.Exists(outputPath));

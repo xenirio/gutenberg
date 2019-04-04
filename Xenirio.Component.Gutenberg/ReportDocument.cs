@@ -40,6 +40,7 @@ namespace Xenirio.Component.Gutenberg
                 mem.Write(bytes, 0, bytes.Length);
                 using (WordprocessingDocument document = WordprocessingDocument.Open(mem, true))
                 {
+                    CompileTemplate(document);
                     ReplaceDocument(document);
                     document.Close();
                     return mem.ToArray();
