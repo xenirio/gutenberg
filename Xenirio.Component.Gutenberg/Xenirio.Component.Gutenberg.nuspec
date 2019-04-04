@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Add more information to KeyNotFoundException
+      - Should not remove Pagination Field Code
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
