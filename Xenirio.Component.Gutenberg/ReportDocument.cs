@@ -118,6 +118,8 @@ namespace Xenirio.Component.Gutenberg
             foreach (var field in fields)
             {
                 var key = field.Text.Trim();
+                if (!key.Contains("DOCVARIABLE"))
+                    continue;
                 if (!variables.ContainsKey(key))
                 {
                     var elem = field.Ancestors<Paragraph>().Single();
