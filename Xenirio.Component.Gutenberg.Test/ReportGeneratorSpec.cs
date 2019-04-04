@@ -195,5 +195,17 @@ namespace Xenirio.Component.Gutenberg.Tests
             report.GenerateToFile(outputPath);
             Assert.IsTrue(File.Exists(outputPath));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void Should_Throw_With_Missing_Field_Information()
+        {
+            var template = Environment.CurrentDirectory + @"\Resources\SampleContentTemplate.docx";
+            var report = new ReportGenerator(template);
+            report.setParagraph("Blah", "");
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsFalse(File.Exists(outputPath));
+        }
     }
 }
