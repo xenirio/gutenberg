@@ -2,21 +2,20 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.6.4</version>
+    <version>1.6.5</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Should not remove Pagination Field Code
+      - Remove unused dependency
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
     <dependencies>
       <group targetFramework="net452">
         <dependency id="DocumentFormat.OpenXml" version="2.8.1" />
-        <dependency id="FreeSpire.Doc" version="5.7" />
       </group>
     </dependencies>
   </metadata>
