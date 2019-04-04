@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Report Generator based on OpenXML</description>
     <releaseNotes>
-      - Reduce complexity of Value Properties of ReportTemplateElement
+      - Add ReportGenerator Public Interface for Creating ReportTemplate
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
