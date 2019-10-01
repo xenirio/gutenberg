@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2015
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg", "Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj", "{C9032837-A7B2-4C8C-A1F2-0A6CA6DD6910}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg.Test", "Xenirio.Component.Gutenberg.Test\Xenirio.Component.Gutenberg.Test.csproj", "{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg.Extension", "Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extension.csproj", "{7C836791-9DC3-4178-8490-BCA79EA1945A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C836791-9DC3-4178-8490-BCA79EA1945A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C836791-9DC3-4178-8490-BCA79EA1945A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C836791-9DC3-4178-8490-BCA79EA1945A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C836791-9DC3-4178-8490-BCA79EA1945A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
