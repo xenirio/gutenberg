@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xenirio.Component.Gutenberg.Extension.Json
+namespace Xenirio.Component.Gutenberg.Extensions
 {
     public static class ReportGeneratorJsonExtension
     {

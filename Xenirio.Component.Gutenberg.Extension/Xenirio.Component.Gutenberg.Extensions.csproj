@@ -7,8 +7,8 @@
     <ProjectGuid>{7C836791-9DC3-4178-8490-BCA79EA1945A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xenirio.Component.Gutenberg.Extension</RootNamespace>
-    <AssemblyName>Xenirio.Component.Gutenberg.Extension</AssemblyName>
+    <RootNamespace>Xenirio.Component.Gutenberg.Extensions</RootNamespace>
+    <AssemblyName>Xenirio.Component.Gutenberg.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Xenirio.Component.Gutenberg.Extensions.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
@@ -57,4 +58,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call $(SolutionDir)pack.bat "$(ProjectDir)Xenirio.Component.Gutenberg.Extensions.nuspec"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

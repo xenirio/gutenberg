@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using Xenirio.Component.Gutenberg.Extension.Json;
+using Xenirio.Component.Gutenberg.Extensions;
 
 namespace Xenirio.Component.Gutenberg.Test
 {

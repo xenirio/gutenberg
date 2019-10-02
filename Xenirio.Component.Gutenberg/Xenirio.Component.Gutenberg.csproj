@@ -73,4 +73,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call $(SolutionDir)pack.bat "$(ProjectDir)Xenirio.Component.Gutenberg.nuspec"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

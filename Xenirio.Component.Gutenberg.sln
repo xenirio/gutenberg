@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg.Test", "Xenirio.Component.Gutenberg.Test\Xenirio.Component.Gutenberg.Test.csproj", "{5B6D9ECE-E0DD-42BA-B6E8-6791C4A3262E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg.Extension", "Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extension.csproj", "{7C836791-9DC3-4178-8490-BCA79EA1945A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenirio.Component.Gutenberg.Extensions", "Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extensions.csproj", "{7C836791-9DC3-4178-8490-BCA79EA1945A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.8.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.8.1\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -48,6 +51,16 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xenirio.Component.Gutenberg, Version=1.1.0.27376, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xenirio.Component.Gutenberg.1.6.5\lib\net45\Xenirio.Component.Gutenberg.dll</HintPath>
+    </Reference>
+    <Reference Include="Xenirio.Component.Gutenberg.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xenirio.Component.Gutenberg.Extensions.0.1.0\lib\net45\Xenirio.Component.Gutenberg.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -102,16 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Templates\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extension.csproj">
-      <Project>{7c836791-9dc3-4178-8490-bca79ea1945a}</Project>
-      <Name>Xenirio.Component.Gutenberg.Extension</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
-      <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
-      <Name>Xenirio.Component.Gutenberg</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\banner.png">
