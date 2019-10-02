@@ -9,20 +9,38 @@ namespace Xenirio.Component.Gutenberg.Extension.Json
 {
     public static class ReportGeneratorJsonExtension
     {
-        public static void setJsonToken(this ReportGenerator context, JObject json)
+        public static void setJsonObject(this ReportGenerator context, JObject json)
         {
-            
+            var flattens = json.DeserializeAndFlatten();
+            foreach (var item in flattens)
+            {
+                var token = item.Value;
+                if(token.Type == JTokenType.Array)
+                {
+                    if(token[0].Type == JTokenType.Array)
+                        context.setTableParagraph(item.Key, token.Children().Select(t => t.Children().Select(c => ((JValue)c).Value.ToString()).ToArray()).ToArray());
+                    else
+                        context.setParagraphs(item.Key, token.Children().Select(t => ((JValue)t).Value.ToString()).ToArray());
+                }
+                else
+                {
+                    context.setParagraph(item.Key, ((JValue)item.Value).Value.ToString());
+                }
+            }
         }
+    }
 
-        private static Dictionary<string, object> deserializeAndFlatten(string json)
+    public static class JObjectExtension
+    {
+        public static Dictionary<string, JToken> DeserializeAndFlatten(this JObject json)
         {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            JToken token = JToken.Parse(json);
+            Dictionary<string, JToken> dict = new Dictionary<string, JToken>();
+            JToken token = JToken.Parse(json.ToString());
             fillDictionaryFromJToken(dict, token, "");
             return dict;
         }
 
-        private static void fillDictionaryFromJToken(Dictionary<string, object> dict, JToken token, string prefix)
+        private static void fillDictionaryFromJToken(Dictionary<string, JToken> dict, JToken token, string prefix)
         {
             switch (token.Type)
             {
@@ -33,17 +51,8 @@ namespace Xenirio.Component.Gutenberg.Extension.Json
                     }
                     break;
 
-                case JTokenType.Array:
-                    int index = 0;
-                    foreach (JToken value in token.Children())
-                    {
-                        fillDictionaryFromJToken(dict, value, join(prefix, index.ToString()));
-                        index++;
-                    }
-                    break;
-
                 default:
-                    dict.Add(prefix, ((JValue)token).Value);
+                    dict.Add(prefix, token);
                     break;
             }
         }

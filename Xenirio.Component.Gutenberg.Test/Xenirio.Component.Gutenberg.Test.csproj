@@ -44,6 +44,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -59,6 +62,7 @@
     <Compile Include="ReportDocumentSpec.cs" />
     <Compile Include="ReportGeneratorSpec.cs" />
     <Compile Include="FragmentedVariableSpec.cs" />
+    <Compile Include="ReportGeneratorExtensionSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -72,6 +76,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\SampleFragmentedVariable.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SampleJsonTemplate.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\SampleLabel.docx">
@@ -97,6 +104,10 @@
     <Folder Include="Resources\Templates\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extension.csproj">
+      <Project>{7c836791-9dc3-4178-8490-bca79ea1945a}</Project>
+      <Name>Xenirio.Component.Gutenberg.Extension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
       <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
       <Name>Xenirio.Component.Gutenberg</Name>
