@@ -91,6 +91,57 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
         }
 
         [TestMethod]
+        public void Should_Replace_Expandable_Table_Element()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleExpandableTable.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleExpandableTableTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+
+            document.InjectReportElement(new ReportTable()
+            {
+                Key = "Content.Table.Entity",
+                Elements = new ReportLabel[][] {
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "" },
+                        new ReportLabel() { Value = "31 DEC 2017" },
+                        new ReportLabel() { Value = "31 DEC 2016" },
+                        new ReportLabel() { Value = "31 DEC 2015" },
+                        new ReportLabel() { Value = "31 DEC 2014" },
+                        new ReportLabel() { Value = "31 DEC 2013" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "Period Start Date" },
+                        new ReportLabel() { Value = "1 JAN 2017" },
+                        new ReportLabel() { Value = "1 JAN 2016" },
+                        new ReportLabel() { Value = "1 JAN 2015" },
+                        new ReportLabel() { Value = "1 JAN 2014" },
+                        new ReportLabel() { Value = "12 APR 2013" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "Period End Date" },
+                        new ReportLabel() { Value = "31 DEC 2017" },
+                        new ReportLabel() { Value = "31 DEC 2016" },
+                        new ReportLabel() { Value = "31 DEC 2015" },
+                        new ReportLabel() { Value = "31 DEC 2014" },
+                        new ReportLabel() { Value = "31 DEC 2013" }
+                    },
+                    new ReportLabel[] {
+                        new ReportLabel() { Value = "Account Type" },
+                        new ReportLabel() { Value = "COMPANY" },
+                        new ReportLabel() { Value = "COMPANY" },
+                        new ReportLabel() { Value = "COMPANY" },
+                        new ReportLabel() { Value = "COMPANY" },
+                        new ReportLabel() { Value = "COMPANY" }
+                    }
+                }
+            });
+            document.Save(outfile);
+        }
+
+        [TestMethod]
         public void Should_Replace_Image_Element()
         {
             var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleImage.docx";
