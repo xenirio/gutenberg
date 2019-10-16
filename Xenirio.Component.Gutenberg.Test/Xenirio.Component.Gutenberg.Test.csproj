@@ -55,12 +55,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
-    <Reference Include="Xenirio.Component.Gutenberg, Version=1.1.0.27376, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xenirio.Component.Gutenberg.1.6.5\lib\net45\Xenirio.Component.Gutenberg.dll</HintPath>
-    </Reference>
-    <Reference Include="Xenirio.Component.Gutenberg.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xenirio.Component.Gutenberg.Extensions.0.1.0\lib\net45\Xenirio.Component.Gutenberg.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -86,6 +80,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\SampleContentTemplate.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SampleExpandableTable.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\SampleFragmentedVariable.docx">
@@ -123,6 +120,16 @@
     <Content Include="Resources\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xenirio.Component.Gutenberg.Extension\Xenirio.Component.Gutenberg.Extensions.csproj">
+      <Project>{7c836791-9dc3-4178-8490-bca79ea1945a}</Project>
+      <Name>Xenirio.Component.Gutenberg.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
+      <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
+      <Name>Xenirio.Component.Gutenberg</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
