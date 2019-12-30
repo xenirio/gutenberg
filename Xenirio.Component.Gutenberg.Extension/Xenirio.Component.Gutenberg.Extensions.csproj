@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Xenirio.Component.Gutenberg.Extensions.nuspec" />
+    <None Include="Xenirio.Component.Gutenberg.Extensions.nuspec">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
@@ -59,6 +61,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call $(SolutionDir)pack.bat "$(ProjectDir)Xenirio.Component.Gutenberg.Extensions.nuspec"</PostBuildEvent>
+    <PostBuildEvent>call $(SolutionDir)pack.bat "$(TargetDir)Xenirio.Component.Gutenberg.Extensions.nuspec"</PostBuildEvent>
   </PropertyGroup>
 </Project>
