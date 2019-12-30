@@ -7,5 +7,5 @@
 ```
 
 ```bash
-> Gutenberg.exe create --file out1.pdf --from samples\SampleJsonTemplate.docx --with samples\SampleSource.json
+> Gutenberg.exe create --file out1.docx --from samples\SampleJsonTemplate.docx --with samples\SampleSource.json
 ```

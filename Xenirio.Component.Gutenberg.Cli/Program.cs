@@ -1,6 +1,5 @@
 ﻿using CommandLine;
 using Newtonsoft.Json.Linq;
-using Spire.Doc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,14 +38,7 @@ namespace Xenirio.Component.Gutenberg.Cli
                                 var report = new ReportGenerator(string.Format("{0}\\{1}", Environment.CurrentDirectory, template));
                                 var json = JObject.Parse(File.ReadAllText(string.Format("{0}\\{1}", Environment.CurrentDirectory, opts.Source)));
                                 report.setJsonObject(json);
-                                Stream reportStream = new MemoryStream(report.GenerateToByte(OutputFormat.Word));
-                                var converter = new Document() { JPEGQuality = 100 };
-                                converter.InsertTextFromStream(reportStream, FileFormat.Docx);
-                                using (var stream = new MemoryStream())
-                                {
-                                    converter.SaveToStream(stream, FileFormat.PDF);
-                                    File.WriteAllBytes(output, stream.ToArray());
-                                }
+                                report.GenerateToFile(output);
                                 return 0;
                             },
                             errs => 1
