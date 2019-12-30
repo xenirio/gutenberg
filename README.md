@@ -93,11 +93,13 @@ Gutenberg will generate the complete & beautiful WYSIWYG Word document for you.
             "Content": {
                 "Summary": {
                     "Author": "Nagi",
-                    "Prep": "20 mins",
-                    "Cook": "30 mins",
-                    "Total": "50 mins",
                     "Serving": "20"
                 },
+                "Times": [
+                    [ "Prep", "20 mins" ],
+                    [ "Cook", "30 mins" ],
+                    [ "Total", "50 mins" ]
+                ],
                 "Recipe": {
                     "Name": "Homemade Sausage Rolls",
                     "Description": "\"The secret is the bacon...\" It really takes this sausage roll to another level! Also, sautéing the onion and celery before mixing into the filling makes it sweet and more moist than the usual. The addition of fennel adds an extra burst of flavour (optional) - pork and fennel are great mates - and using panko instead of normal breadcrumbs also contributes to making the filling of this sausage roll so moist.",
@@ -119,7 +121,7 @@ Gutenberg will generate the complete & beautiful WYSIWYG Word document for you.
                         "1 egg , lightly whisked",
                         "Ketchup / tomato sauce"
                     ],
-                    "Instrucions": [
+                    "Instructions": [
                         "Heat oil in a non stick fry pan over medium high heat. Sauté garlic, onion & celery for 2 minutes, then add bacon.",
                         "Cook for a further 2 minutes (don't make bacon golden) then transfer to bowl and allow to cool for 10 minutes.",
                         "Add remaining Filling ingredients into the bowl. Use your hands to mix well.",
