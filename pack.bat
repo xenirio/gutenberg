@@ -12,3 +12,11 @@ if not exist %NUEGT% (
 )
 
 %NUEGT% pack %1 -OutputDirectory .\artifacts
+
+:end
+echo Packing successfully.
+EXIT 0
+
+:error_exit
+pause
+EXIT 1
