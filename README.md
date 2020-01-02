@@ -171,3 +171,50 @@ Gutenberg will generate the complete & beautiful WYSIWYG Word document for you.
     var output = @"\RecipeSample.docx";
     report.GenerateToFile(output);
     ```
+
+# Repeating Template
+Gutenberg support has Repeating Template feature. For example if we have word template like this:
+
+![flower-template.png](./resources/images/flower-template.png)
+
+We can declare the repeating region using specific DOCVARIEBLE format `TemplateSection.{TemplateName}.Start` along with `TemplateSection.{TemplateName}.End`. And then, we declare the placeholder to put the template location. In above picture, `Content.Flowers` is the placeholder for replacing template.
+
+In code, we have to set the repeating template directly to `ReportDocument` object.
+
+```c#
+// Preserve template file
+if (File.Exists("FlowerList_Output.docx"))
+    File.Delete("FlowerList_Output.docx");
+File.Copy("FlowerListTemplate.docx", "FlowerList_Output.docx");
+
+var imgLisianthus = File.ReadAllBytes("lisianthus.jpg");
+var imgPrimula = File.ReadAllBytes("primula.jpg");
+
+var data = new IReportReplaceable[][]
+{
+    new IReportReplaceable[] { 
+        new ReportImage() { Key = "Flower.Image", Value = imgLisianthus },
+        new ReportLabel() { Key = "Flower.Name", Value = "Lisianthus" },
+        new ReportLabel() { Key = "Flower.Meanings", Value = "Life long bond, Appreciation" }
+    },
+    new IReportReplaceable[] {
+        new ReportImage() { Key = "Flower.Image", Value = imgPrimula },
+        new ReportLabel() { Key = "Flower.Name", Value = "Primula" },
+        new ReportLabel() { Key = "Flower.Meanings", Value = "Youth, Young Love" }
+    },
+};
+
+var document = new ReportDocument();
+document.InjectReportElement(new ReportTemplateElement()
+{
+    Key = "Content.Flowers",
+    TemplateKey = "Flower",
+    Value = data
+});
+document.RegisterTemplate("Flower");
+document.Save("FlowerList_Output.docx");
+```
+
+Here is the result :
+
+![flower-template-result.png](./resources/images/flower-template-result.png)
