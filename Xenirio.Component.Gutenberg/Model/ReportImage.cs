@@ -13,18 +13,25 @@ namespace Xenirio.Component.Gutenberg.Model
 {
 	public class ReportImage : ReportElement, IReportReplaceable
 	{
+        private OpenXmlPart docPart;
+
 		public byte[] Value
 		{
 			get { return GetValue<byte[]>(); }
 			set { SetValue(value); }
 		}
 
+        public void InjectDocPart(OpenXmlPart docPart)
+        {
+            this.docPart = docPart;
+        }
+
 		public void Replace(Run element)
 		{
             var paragraph = (Paragraph)element.Parent;
             if (paragraph != null)
             {
-                var mainPart = getMainDocumentPart(paragraph);
+                var mainPart = docPart == null ? getMainDocumentPart(paragraph) : docPart;
 
                 ImagePart imagePart;
                 if (mainPart.GetType() == typeof(MainDocumentPart))

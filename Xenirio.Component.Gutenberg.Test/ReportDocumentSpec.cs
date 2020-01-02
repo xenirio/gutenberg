@@ -391,5 +391,42 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             });
             document.Save(outfile);
         }
+
+        [TestMethod]
+        public void Should_Render_Template_With_Image_Element()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFlowerList.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleFlowerListTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+
+            var imgLisianthus = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\lisianthus.jpg");
+            var imgPrimula = File.ReadAllBytes(Environment.CurrentDirectory + @"\Resources\primula.jpg");
+
+            var data = new IReportReplaceable[][]
+            {
+                new IReportReplaceable[] {
+                    new ReportImage() { Key = "Flower.Image", Value = imgLisianthus },
+                    new ReportLabel() { Key = "Flower.Name", Value = "Lisianthus" },
+                    new ReportLabel() { Key = "Flower.Meanings", Value = "Life long bond, Appreciation" }
+                },
+                new IReportReplaceable[] {
+                    new ReportImage() { Key = "Flower.Image", Value = imgPrimula },
+                    new ReportLabel() { Key = "Flower.Name", Value = "Primula" },
+                    new ReportLabel() { Key = "Flower.Meanings", Value = "Youth, Young Love" }
+                },
+            };
+
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportTemplateElement()
+            {
+                Key = "Content.Flowers",
+                TemplateKey = "Flower",
+                Value = data
+            });
+            document.RegisterTemplate("Flower");
+            document.Save(outfile);
+        }
     }
 }

@@ -24,12 +24,17 @@ namespace Xenirio.Component.Gutenberg
         internal void Apply(OpenXmlElement replacedElement, IReportReplaceable[][] templateValues)
         {
             var templateValuesDicts = new List<Dictionary<string, IReportReplaceable>>();
-            foreach(var row in templateValues)
+            var mainPart = getMainDocumentPart(replacedElement);
+            foreach (var row in templateValues)
             {
                 var rowDict = new Dictionary<string, IReportReplaceable>();
                 foreach(var item in row)
                 {
                     rowDict.Add((item as ReportElement).Key, item);
+                    if (item.GetType() == typeof(ReportImage))
+                    {
+                        (item as ReportImage).InjectDocPart(mainPart);
+                    }
                 }
                 templateValuesDicts.Add(rowDict);
             }
@@ -58,6 +63,14 @@ namespace Xenirio.Component.Gutenberg
                 }
             }
             replacedElement.Remove();
+        }
+
+        private OpenXmlPart getMainDocumentPart(OpenXmlElement element)
+        {
+            return
+            element?.Ancestors<Document>()?.FirstOrDefault()?.MainDocumentPart as OpenXmlPart ??
+            element?.Ancestors<Header>()?.FirstOrDefault()?.HeaderPart as OpenXmlPart ??
+            element?.Ancestors<Footer>()?.FirstOrDefault()?.FooterPart as OpenXmlPart;
         }
 
         private void replace(FieldCode[] fields, Dictionary<string, IReportReplaceable> rowValue)
