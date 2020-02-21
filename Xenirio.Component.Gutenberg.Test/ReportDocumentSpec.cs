@@ -428,5 +428,61 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             document.RegisterTemplate("Flower");
             document.Save(outfile);
         }
+        
+        public void Should_Support_Paragraph_Styling()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleStyling.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleStylingTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Should.Red",
+                Value = "This is Red sentense.",
+                Style = new ReportLabelStyle()
+                {
+                    Color = "#FF0000"
+                }
+            });
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Should.Green",
+                Value = "This is Green sentense.",
+                Style = new ReportLabelStyle()
+                {
+                    Color = "#00FF00"
+                }
+            });
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Should.Blue",
+                Value = "This is Blue sentense.",
+                Style = new ReportLabelStyle()
+                {
+                    Color = "#0000FF"
+                }
+            });
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Should.Bold",
+                Value = "This is Bold sentense.",
+                Style = new ReportLabelStyle()
+                {
+                    Bold = true
+                }
+            });
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Should.Italic",
+                Value = "This is Italic sentense.",
+                Style = new ReportLabelStyle()
+                {
+                    Italic = true
+                }
+            });
+            document.Save(outfile);
+        }
     }
 }

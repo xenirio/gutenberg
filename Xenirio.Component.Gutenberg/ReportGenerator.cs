@@ -25,7 +25,12 @@ namespace Xenirio.Component.Gutenberg
 			_document.InjectReportElement(new ReportLabel() { Key = key, Value = content });
 		}
 
-		public void setParagraphs(string key, string[] content)
+        public void setParagraph(string key, string content, ReportLabelStyle style)
+        {
+            _document.InjectReportElement(new ReportLabel() { Key = key, Value = content, Style = style });
+        }
+
+        public void setParagraphs(string key, string[] content)
 		{
 			_document.InjectReportElement(new ReportLabels() { Key = key, Values = content });
 		}
@@ -45,6 +50,23 @@ namespace Xenirio.Component.Gutenberg
 
             _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
 		}
+
+        public void setTableParagraph(string key, KeyValuePair<string, ReportLabelStyle>[][] content)
+        {
+            var values = new List<ReportElement[]>();
+            for (var i = 0; i < content.Length; i++)
+            {
+                var labels = new List<ReportLabel>();
+                for (var j = 0; j < content[i].Length; j++)
+                {
+                    var elem = content[i][j];
+                    labels.Add(new ReportLabel() { Value = elem.Key, Style = elem.Value });
+                }
+                values.Add(labels.ToArray());
+            }
+
+            _document.InjectReportElement(new ReportTable() { Key = key, Elements = values.ToArray() });
+        }
 
         public void setImage(string key, byte[] content)
         {

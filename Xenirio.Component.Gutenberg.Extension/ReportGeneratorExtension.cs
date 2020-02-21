@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xenirio.Component.Gutenberg.Model;
 
 namespace Xenirio.Component.Gutenberg.Extensions
 {
@@ -11,20 +12,43 @@ namespace Xenirio.Component.Gutenberg.Extensions
     {
         public static void setJsonObject(this ReportGenerator context, JObject json)
         {
-            var flattens = json.DeserializeAndFlatten();
-            foreach (var item in flattens)
+            var flattenContents = json["Content"].DeserializeAndFlatten();
+            var flattenStyles = json.ContainsKey("Style") ? json["Style"].DeserializeAndFlatten(1) : new Dictionary<string, JToken>();
+            foreach (var item in flattenContents)
             {
+                var contentKey = "Content." + item.Key;
                 var token = item.Value;
-                if(token.Type == JTokenType.Array)
+                if (token.Type == JTokenType.Array)
                 {
-                    if(token[0].Type == JTokenType.Array)
-                        context.setTableParagraph(item.Key, token.Children().Select(t => t.Children().Select(c => ((JValue)c).Value.ToString()).ToArray()).ToArray());
+                    if (token[0].Type == JTokenType.Array)
+                    {
+                        var values = token.Children().Select(t => t.Children().Select(c => ((JValue)c).Value.ToString()).ToArray()).ToArray();
+                        if (flattenStyles.ContainsKey(contentKey))
+                        {
+                            var styles = flattenStyles[contentKey].ToObject<ReportLabelStyle[][]>();
+                            var valueStyles = values.Select((v, iv) => v.Select((e, ie) => new KeyValuePair<string, ReportLabelStyle>(e, styles[iv][ie])).ToArray()).ToArray();
+                            context.setTableParagraph(contentKey, valueStyles);
+                        }
+                        else
+                        {
+                            context.setTableParagraph(contentKey, values);
+                        }
+                    }
                     else
-                        context.setParagraphs(item.Key, token.Children().Select(t => ((JValue)t).Value.ToString()).ToArray());
+                        context.setParagraphs(contentKey, token.Children().Select(t => ((JValue)t).Value.ToString()).ToArray());
                 }
                 else
                 {
-                    context.setParagraph(item.Key, ((JValue)item.Value).Value.ToString());
+                    var value = ((JValue)item.Value).Value.ToString();
+                    if (flattenStyles.ContainsKey(contentKey))
+                    {
+                        var styleToken = flattenStyles[contentKey].ToObject<ReportLabelStyle>();
+                        context.setParagraph(contentKey, value, styleToken);
+                    }
+                    else
+                    {
+                        context.setParagraph(contentKey, value);
+                    }
                 }
             }
         }
@@ -32,12 +56,29 @@ namespace Xenirio.Component.Gutenberg.Extensions
 
     public static class JObjectExtension
     {
-        public static Dictionary<string, JToken> DeserializeAndFlatten(this JObject json)
+        public static Dictionary<string, JToken> DeserializeAndFlatten(this JToken token, int level = 0)
         {
             Dictionary<string, JToken> dict = new Dictionary<string, JToken>();
-            JToken token = JToken.Parse(json.ToString());
             fillDictionaryFromJToken(dict, token, "");
-            return dict;
+
+            var flattenDict = new Dictionary<string, JToken>();
+            foreach (var flat in dict)
+            {
+                var flatKeys = flat.Key.Split('.');
+                var keys = new List<string>();
+                var val = token;
+                for (var i = 0; i < flatKeys.Length; i++)
+                {
+                    var raw = val[flatKeys[i]];
+                    if (i < flatKeys.Length - level || raw.Type == JTokenType.Array)
+                    {
+                        keys.Add(flatKeys[i]);
+                        val = raw;
+                    }
+                }
+                flattenDict.Add(string.Join(".", keys), val);
+            }
+            return flattenDict;
         }
 
         private static void fillDictionaryFromJToken(Dictionary<string, JToken> dict, JToken token, string prefix)
