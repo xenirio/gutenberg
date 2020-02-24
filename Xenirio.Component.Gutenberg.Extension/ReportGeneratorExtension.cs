@@ -76,7 +76,9 @@ namespace Xenirio.Component.Gutenberg.Extensions
                         val = raw;
                     }
                 }
-                flattenDict.Add(string.Join(".", keys), val);
+                var flattenKey = string.Join(".", keys);
+                if (!flattenDict.ContainsKey(flattenKey))
+                    flattenDict.Add(flattenKey, val);
             }
             return flattenDict;
         }
