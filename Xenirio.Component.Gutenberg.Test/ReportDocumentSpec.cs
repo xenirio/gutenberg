@@ -392,7 +392,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             document.Save(outfile);
         }
 
-        [TestMethod]
+        
         public void Should_Render_Template_With_Image_Element()
         {
             var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleFlowerList.docx";
@@ -428,7 +428,8 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             document.RegisterTemplate("Flower");
             document.Save(outfile);
         }
-        
+
+        [TestMethod]
         public void Should_Support_Paragraph_Styling()
         {
             var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleStyling.docx";
@@ -480,6 +481,36 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
                 Style = new ReportLabelStyle()
                 {
                     Italic = true
+                }
+            });
+            document.Save(outfile);
+        }
+
+        [TestMethod]
+        public void Should_Support_Inline_Paragraph()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleInlineLabel.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleInlineLabelTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Inline.First",
+                Value = "This is first inline text.",
+                Style = new ReportLabelStyle()
+                {
+                    Color = "#FF0000"
+                }
+            });
+            document.InjectReportElement(new ReportLabel()
+            {
+                Key = "Content.Inline.Second",
+                Value = "This is second inline text.",
+                Style = new ReportLabelStyle()
+                {
+                    Color = "#00FF00"
                 }
             });
             document.Save(outfile);

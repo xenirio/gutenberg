@@ -25,9 +25,10 @@ namespace Xenirio.Component.Gutenberg.Model
 			var paragraph = (Paragraph)element.Parent;
             if (paragraph != null)
             {
-                paragraph.RemoveAllChildren<Run>();
-                var token = Value.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-                for (var i = 0; i < token.Length; i++)
+				element.PreviousSibling<Run>()?.Remove();
+				element.NextSibling<Run>()?.Remove();
+				var token = Value.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+				for (var i = 0; i < token.Length; i++)
                 {
 					var text = new Run(new Text(token[i]));
 					if (Style != null) {
@@ -44,10 +45,17 @@ namespace Xenirio.Component.Gutenberg.Model
 						if (Style.Italic == true)
 							text.RunProperties.Italic = new Italic();
 					}
-					paragraph.AppendChild(text);
-                    if (i < token.Length - 1)
-                        paragraph.AppendChild(new Run(new Break()));
-                }
+					if (i == 0)
+					{
+						paragraph.ReplaceChild(text, element);
+					}
+					else
+					{
+						if (i < token.Length - 1)
+							paragraph.AppendChild(new Run(new Break()));
+						paragraph.AppendChild(text);
+					}
+				}
 			}
 		}
 	}

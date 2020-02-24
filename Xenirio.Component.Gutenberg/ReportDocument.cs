@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using DocumentFormat.OpenXml;
 
 namespace Xenirio.Component.Gutenberg
 {
@@ -67,13 +68,50 @@ namespace Xenirio.Component.Gutenberg
             // footer variable
             paragraphs.AddRange(document.MainDocumentPart.FooterParts.SelectMany(f => f.Footer.Descendants<Paragraph>()));
 
+            //foreach (var paragraph in paragraphs.Where(p => p.Descendants<FieldCode>().Any()))
+            //{
+            //    var codes = paragraph.SelectMany(p => p.Descendants<FieldCode>()).ToList();
+            //    paragraph.RemoveAllChildren<Run>();
+            //    foreach (var code in codes)
+            //    {
+            //        paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
+            //        paragraph.Append(new Run(new FieldCode(code.InnerText.Trim())));
+            //        paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
+            //    }
+            //}
+
+            var dirtyChilds = new List<OpenXmlElement>();
             foreach (var paragraph in paragraphs.Where(p => p.Descendants<FieldCode>().Any()))
             {
-                var code = paragraph.InnerText.Trim();
-                paragraph.RemoveAllChildren<Run>();
-                paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
-                paragraph.Append(new Run(new FieldCode(code)));
-                paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
+                List<string> codes = null;
+                foreach (var elem in paragraph.Elements().SelectMany(e => e.ChildElements))
+                {
+                    if (elem.GetType() == typeof(FieldChar))
+                    {
+                        var fChar = (FieldChar)elem;
+                        if (fChar.FieldCharType == FieldCharValues.Begin)
+                            codes = new List<string>();
+                        if (fChar.FieldCharType == FieldCharValues.End)
+                        {
+                            var fieldCode = new Run(new FieldCode(string.Join("", codes).Trim()));
+                            paragraph.InsertBefore(fieldCode, elem.Parent);
+                            codes = null;
+                        }
+                    }
+                    else
+                    {
+                        if (codes != null && elem.GetType() == typeof(FieldCode))
+                        {
+                            codes.Add(elem.InnerText);
+                            dirtyChilds.Add(elem.Parent);
+                        }
+                    }
+                }
+                foreach (var dirty in dirtyChilds)
+                {
+                    paragraph.RemoveChild(dirty);
+                }
+                dirtyChilds.Clear();
             }
 
             var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>());
