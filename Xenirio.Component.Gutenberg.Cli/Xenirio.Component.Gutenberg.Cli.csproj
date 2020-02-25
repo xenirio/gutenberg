@@ -52,8 +52,11 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Xenirio.Component.Gutenberg, Version=1.1.0.18893, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xenirio.Component.Gutenberg.1.7.5\lib\net45\Xenirio.Component.Gutenberg.dll</HintPath>
+    </Reference>
     <Reference Include="Xenirio.Component.Gutenberg.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Xenirio.Component.Gutenberg.Extension\bin\Debug\Xenirio.Component.Gutenberg.Extensions.dll</HintPath>
+      <HintPath>..\packages\Xenirio.Component.Gutenberg.Extensions.0.1.5\lib\net45\Xenirio.Component.Gutenberg.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,12 +78,6 @@
     <None Include="samples\SampleJsonTemplate.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xenirio.Component.Gutenberg\Xenirio.Component.Gutenberg.csproj">
-      <Project>{c9032837-a7b2-4c8c-a1f2-0a6ca6dd6910}</Project>
-      <Name>Xenirio.Component.Gutenberg</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
