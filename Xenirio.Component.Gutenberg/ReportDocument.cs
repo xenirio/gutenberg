@@ -93,8 +93,11 @@ namespace Xenirio.Component.Gutenberg
                             codes = new List<string>();
                         if (fChar.FieldCharType == FieldCharValues.End)
                         {
-                            var fieldCode = new Run(new FieldCode(string.Join("", codes).Trim()));
+                            var code = string.Join("", codes).Trim();
+                            var fieldCode = new Run(new FieldCode(code));
                             paragraph.InsertBefore(fieldCode, elem.Parent);
+                            if(!code.StartsWith("DOCVARIABLE"))
+                                dirtyChilds.RemoveRange(dirtyChilds.Count - codes.Count, codes.Count);
                             codes = null;
                         }
                     }
@@ -114,7 +117,7 @@ namespace Xenirio.Component.Gutenberg
                 dirtyChilds.Clear();
             }
 
-            var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>());
+            var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>()).Where(p => p.InnerText.Contains("DOCVARIABLE"));
             Replace(fields.ToArray());
             Clean(fields.ToArray());
         }

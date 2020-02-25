@@ -91,6 +91,11 @@ namespace Xenirio.Component.Gutenberg.Test
                         new string[] {"2.00", "3.00", "1.00"},
                         new string[] {"3.00", "2.00", "1.00"},
                     }
+                },
+                Footer = new
+                {
+                    DateTime = DateTime.Now.ToString(),
+                    Creator = "Foo"
                 }
             });
             var template = Environment.CurrentDirectory + @"\Resources\SampleJsonTemplate.docx";

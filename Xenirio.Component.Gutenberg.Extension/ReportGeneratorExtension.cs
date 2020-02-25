@@ -12,11 +12,23 @@ namespace Xenirio.Component.Gutenberg.Extensions
     {
         public static void setJsonObject(this ReportGenerator context, JObject json)
         {
-            var flattenContents = json["Content"].DeserializeAndFlatten();
+            var flattenContents = new Dictionary<string, JToken>();
+            var contentKeys = json.Properties().Where(p => p.Name != "Style").Select(p => p.Name);
+            foreach (var key in contentKeys)
+            {
+                var tokens = json.ContainsKey(key) ? json[key].DeserializeAndFlatten() : new Dictionary<string, JToken>();
+                if (tokens.Any())
+                {
+                    foreach (var token in tokens)
+                    {
+                        flattenContents.Add(string.Format("{0}.{1}", key, token.Key), token.Value);
+                    }
+                }
+            }
             var flattenStyles = json.ContainsKey("Style") ? json["Style"].DeserializeAndFlatten(1) : new Dictionary<string, JToken>();
             foreach (var item in flattenContents)
             {
-                var contentKey = "Content." + item.Key;
+                var contentKey = item.Key;
                 var token = item.Value;
                 if (token.Type == JTokenType.Array)
                 {
