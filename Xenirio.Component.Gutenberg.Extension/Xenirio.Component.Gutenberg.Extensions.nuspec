@@ -2,20 +2,23 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg.Extensions</id>
-    <version>0.1.0</version>
+    <version>0.1.5</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Gutenberg Report Extensions</description>
     <releaseNotes>
+      v0.1.0
       - Set report content by Json
+      v0.1.5
+      - Support paragraph styling by Json
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags></tags>
     <dependencies>
       <group targetFramework="net452">
-        <dependency id="Xenirio.Component.Gutenberg" version="1.6.5" />
+        <dependency id="Xenirio.Component.Gutenberg" version="1.7.5" />
         <dependency id="Newtonsoft.Json" version="11.0.2" />
       </group>
     </dependencies>

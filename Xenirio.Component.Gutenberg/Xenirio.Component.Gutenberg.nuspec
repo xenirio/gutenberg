@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.7.0</version>
+    <version>1.7.5</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
@@ -13,6 +13,9 @@
       - Remove unused dependency
       v1.7.0
       - Introduce Expandable Table feature
+      v1.7.5
+      - Introduce code-based paragraph styling
+      - Fix bugs of inline paragraph has overriden
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags></tags>
