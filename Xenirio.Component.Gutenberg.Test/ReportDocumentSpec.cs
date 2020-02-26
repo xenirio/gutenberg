@@ -348,6 +348,7 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             {
                 var result = new List<IReportReplaceable>();
                 result.Add(new ReportLabel() { Key = "Skill.Name", Value = r[0] });
+                result.Add(new ReportLabel() { Key = "Skill.Nickname", Value = r[2] });
                 result.Add(new ReportLabel() { Key = "Skill.Effect", Value = r[1] });
                 result.Add(new ReportLabel() { Key = "Skill.Cost", Value = r[2] });
 
