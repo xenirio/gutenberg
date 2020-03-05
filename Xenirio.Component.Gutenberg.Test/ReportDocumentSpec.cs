@@ -516,5 +516,84 @@ Cras vel suscipit ex.Fusce quis egestas ex.Nunc mattis arcu sit amet felis ultri
             });
             document.Save(outfile);
         }
+
+        [TestMethod]
+        public void Should_Support_Nested_Template()
+        {
+            var sourcefile = Environment.CurrentDirectory + @"\Resources\SampleNestedTemplate.docx";
+            var outfile = Environment.CurrentDirectory + @"\Resources\SampleNestedTemplateTest.docx";
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+            File.Copy(sourcefile, outfile);
+            var document = new ReportDocument();
+
+            document.InjectReportElement(new ReportTemplateElement()
+            {
+                Key = "Content.PartyMembers",
+                TemplateKey = "CharacterInfo",
+                Value = new IReportReplaceable[][]
+                {
+                    new IReportReplaceable[]
+                    {
+                        new ReportLabel() { Key = "Character.Name", Value = "Faris" },
+                        new ReportLabel() { Key = "Character.Level", Value = "20" },
+                        new ReportTemplateElement() { 
+                            Key = "Character.Skills", 
+                            TemplateKey = "Skill", 
+                            Value = new IReportReplaceable[][] {
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Increase AGI" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "0 MP" },
+                                },
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Discovery" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "10 MP" },
+                                }
+                            } 
+                        },
+                        new ReportLabel() { Key = "Character.Job", Value = "Traveller" },
+                        new ReportLabel() { Key = "Character.HP", Value = "420" },
+                        new ReportLabel() { Key = "Character.MP", Value = "86" },
+                        new ReportLabel() { Key = "Character.CurrentEXP", Value = "4283" },
+                        new ReportLabel() { Key = "Character.Remark", Value = "-" },
+                    },
+                    new IReportReplaceable[]
+                    {
+                        new ReportLabel() { Key = "Character.Name", Value = "Minerva" },
+                        new ReportLabel() { Key = "Character.Level", Value = "19" },
+                        new ReportTemplateElement() {
+                            Key = "Character.Skills",
+                            TemplateKey = "Skill",
+                            Value = new IReportReplaceable[][] {
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Heal" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "5 MP" },
+                                },
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Protect" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "3 MP" },
+                                },
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Raise" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "15 MP" },
+                                },
+                                new IReportReplaceable[] {
+                                    new ReportLabel() { Key = "Skill.Name", Value = "Holy Light" },
+                                    new ReportLabel() { Key = "Skill.ManaUsed", Value = "8 MP" },
+                                }
+                            }
+                        },
+                        new ReportLabel() { Key = "Character.Job", Value = "Priest" },
+                        new ReportLabel() { Key = "Character.HP", Value = "520" },
+                        new ReportLabel() { Key = "Character.MP", Value = "180" },
+                        new ReportLabel() { Key = "Character.CurrentEXP", Value = "3972" },
+                        new ReportLabel() { Key = "Character.Remark", Value = "Lovely Outfit" },
+                    },
+                }
+            });
+            document.RegisterTemplate("CharacterInfo");
+            document.RegisterTemplate("Skill");
+            document.Save(outfile);
+        }
     }
 }
