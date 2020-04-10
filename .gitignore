@@ -51,7 +51,6 @@ BenchmarkDotNet.Artifacts/
 # .NET Core
 project.lock.json
 project.fragment.lock.json
-artifacts/
 **/Properties/launchSettings.json
 
 # StyleCop
@@ -176,7 +175,7 @@ publish/
 PublishScripts/
 
 # NuGet Packages
-*.nupkg
+packages/
 # The packages folder can be ignored because of Package Restore
 **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.

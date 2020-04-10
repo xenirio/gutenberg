@@ -91,9 +91,282 @@ namespace Xenirio.Component.Gutenberg.Test
                         new string[] {"2.00", "3.00", "1.00"},
                         new string[] {"3.00", "2.00", "1.00"},
                     }
+                },
+                Footer = new
+                {
+                    DateTime = DateTime.Now.ToString(),
+                    Creator = "Foo"
                 }
             });
             var template = Environment.CurrentDirectory + @"\Resources\SampleJsonTemplate.docx";
+            var report = new ReportGenerator(template);
+            report.setJsonObject(json);
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Support_Paragraph_Style()
+        {
+            var json = JObject.FromObject(new
+            {
+                Content = new
+                {
+                    Should = new
+                    {
+                        Red = "This is Red sentense.",
+                        Green = "This is Green sentense.",
+                        Blue = "This is Blue sentense.",
+                        Bold = "This is Bold sentense.",
+                        Italic = "This is Italic sentense."
+                    }
+                },
+                Style = new
+                {
+                    Content = new
+                    {
+                        Should = new
+                        {
+                            Red = new
+                            {
+                                Color = "#FF0000"
+                            },
+                            Green = new
+                            {
+                                Color = "#00FF00"
+                            },
+                            Blue = new
+                            {
+                                Color = "#0000FF"
+                            },
+                            Bold = new
+                            {
+                                Bold = true
+                            },
+                            Italic = new
+                            {
+                                Italic = true
+                            }
+                        }
+                    }
+                }
+            });
+            var template = Environment.CurrentDirectory + @"\Resources\SampleStyling.docx";
+            var report = new ReportGenerator(template);
+            report.setJsonObject(json);
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Support_Table_Style()
+        {
+            var json = JObject.FromObject(new
+            {
+                Content = new
+                {
+                    Should = new
+                    {
+                        Red = "This is Red sentense.",
+                        Green = "This is Green sentense.",
+                        Blue = "This is Blue sentense.",
+                        Bold = "This is Bold sentense.",
+                        Italic = "This is Italic sentense."
+                    },
+                    Table = new
+                    {
+                        Should = new
+                        {
+                            Fancy = new string[][]
+                            {
+                                new string[] { "This is Red cell", "This is Green cell", "This is Blue cell"},
+                                new string[] { "This is Red Bold cell", "This is Green Bold cell", "This is Bule Bold cell"},
+                                new string[] { "This is Red Bold Italic cell", "This is Green Bold Italic cell", "This is Blue Bold Italic cell"},
+                                new string[] { "This is cell", "This is cell", "This is cell"},
+                            }
+                        }
+                    }
+                },
+                Style = new
+                {
+                    Content = new
+                    {
+                        Should = new
+                        {
+                            Red = new
+                            {
+                                Color = "#FF0000"
+                            },
+                            Green = new
+                            {
+                                Color = "#00FF00"
+                            },
+                            Blue = new
+                            {
+                                Color = "#0000FF"
+                            },
+                            Bold = new
+                            {
+                                Bold = true
+                            },
+                            Italic = new
+                            {
+                                Italic = true
+                            }
+                        },
+                        Table = new
+                        {
+                            Should = new
+                            {
+                                Fancy = new object[][]
+                                {
+                                    new object[]
+                                    {
+                                        new { Color = "#FF0000" },
+                                        new { Color = "#00FF00" },
+                                        new { Color = "#0000FF" },
+                                    },
+                                    new object[]
+                                    {
+                                        new { Color = "#FF0000", Bold = true },
+                                        new { Color = "#00FF00", Bold = true },
+                                        new { Color = "#0000FF", Bold = true },
+                                    },
+                                    new object[]
+                                    {
+                                        new { Color = "#FF0000", Bold = true, Italic = true },
+                                        new { Color = "#00FF00", Bold = true, Italic = true },
+                                        new { Color = "#0000FF", Bold = true, Italic = true },
+                                    },
+                                    new object[]
+                                    {
+                                        new {},
+                                        new {},
+                                        new {},
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            var template = Environment.CurrentDirectory + @"\Resources\SampleStyling.docx";
+            var report = new ReportGenerator(template);
+            report.setJsonObject(json);
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Support_Inline_Paragraph_Style()
+        {
+            var json = JObject.FromObject(new
+            {
+                Content = new
+                {
+                    Inline = new
+                    {
+                        First = "This is Red sentense.",
+                        Second = "This is Green sentense.",
+                    }
+                },
+                Style = new
+                {
+                    Content = new
+                    {
+                        Inline = new
+                        {
+                            First = new
+                            {
+                                Color = "#FF0000",
+                                Italic = true
+                            },
+                            Second = new
+                            {
+                                Color = "#00FF00",
+                                Bold = true
+                            }
+                        }
+                    }
+                }
+            });
+            var template = Environment.CurrentDirectory + @"\Resources\SampleInlineLabel.docx";
+            var report = new ReportGenerator(template);
+            report.setJsonObject(json);
+            var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);
+            report.GenerateToFile(outputPath);
+            Assert.IsTrue(File.Exists(outputPath));
+        }
+
+        [TestMethod]
+        public void Should_Support_Bullet_Table_Style()
+        {
+            var json = JObject.FromObject(new
+            {
+                Content = new
+                {
+                    Table = new
+                    {
+                        Should = new
+                        {
+                            Bullet = new string[][]
+                            {
+                                new string[] { "•", "This is Red cell", "This is Green cell", "This is Blue cell"},
+                                new string[] { "•", "This is Red Bold cell", "This is Green Bold cell", "This is Bule Bold cell"},
+                                new string[] { "•", "This is Red Bold Italic cell", "This is Green Bold Italic cell", "This is Blue Bold Italic cell"},
+                                new string[] { "•", "This is cell", "This is cell", "This is cell"},
+                            }
+                        }
+                    }
+                },
+                Style = new
+                {
+                    Content = new
+                    {
+                        Table = new
+                        {
+                            Should = new
+                            {
+                                Bullet = new object[][]
+                                {
+                                    new object[]
+                                    {
+                                        new { },
+                                        new { Color = "#FF0000" },
+                                        new { Color = "#00FF00" },
+                                        new { Color = "#0000FF" },
+                                    },
+                                    new object[]
+                                    {
+                                        new { },
+                                        new { Color = "#FF0000", Bold = true },
+                                        new { Color = "#00FF00", Bold = true },
+                                        new { Color = "#0000FF", Bold = true },
+                                    },
+                                    new object[]
+                                    {
+                                        new { },
+                                        new { Color = "#FF0000", Bold = true, Italic = true },
+                                        new { Color = "#00FF00", Bold = true, Italic = true },
+                                        new { Color = "#0000FF", Bold = true, Italic = true },
+                                    },
+                                    new object[]
+                                    {
+                                        new {},
+                                        new {},
+                                        new {},
+                                        new {},
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            var template = Environment.CurrentDirectory + @"\Resources\SampleStyling.docx";
             var report = new ReportGenerator(template);
             report.setJsonObject(json);
             var outputPath = string.Format(@"{0}\{1}{2}.docx", Path.GetDirectoryName(template), Path.GetFileNameWithoutExtension(template), DateTime.Now.Ticks);

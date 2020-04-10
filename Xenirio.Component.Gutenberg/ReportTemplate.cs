@@ -44,16 +44,55 @@ namespace Xenirio.Component.Gutenberg
                 var dRootElement = rootElement.Clone() as Body;
                 paragraphs.AddRange(dRootElement.Descendants<Paragraph>());
 
+                var dirtyChilds = new List<OpenXmlElement>();
                 foreach (var paragraph in paragraphs.Where(p => p.Descendants<FieldCode>().Any()))
                 {
-                    var code = paragraph.InnerText.Trim();
-                    paragraph.RemoveAllChildren<Run>();
-                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
-                    paragraph.Append(new Run(new FieldCode(code)));
-                    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
+                    List<string> codes = null;
+                    foreach (var elem in paragraph.Elements().SelectMany(e => e.ChildElements))
+                    {
+                        if (elem.GetType() == typeof(FieldChar))
+                        {
+                            var fChar = (FieldChar)elem;
+                            if (fChar.FieldCharType == FieldCharValues.Begin)
+                                codes = new List<string>();
+                            if (fChar.FieldCharType == FieldCharValues.End)
+                            {
+                                var code = string.Join("", codes).Trim();
+                                var fieldCode = new FieldCode(code);
+                                var target = (Run)elem.Parent.PreviousSibling<Run>().Clone();
+                                target.ReplaceChild(fieldCode, target.GetFirstChild<FieldCode>());
+                                paragraph.InsertBefore(target, elem.Parent);
+                                if (!code.StartsWith("DOCVARIABLE"))
+                                    dirtyChilds.RemoveRange(dirtyChilds.Count - codes.Count, codes.Count);
+                                codes = null;
+                            }
+                        }
+                        else
+                        {
+                            if (codes != null && elem.GetType() == typeof(FieldCode))
+                            {
+                                codes.Add(elem.InnerText);
+                                dirtyChilds.Add(elem.Parent);
+                            }
+                        }
+                    }
+                    foreach (var dirty in dirtyChilds)
+                    {
+                        paragraph.RemoveChild(dirty);
+                    }
+                    dirtyChilds.Clear();
                 }
 
-                var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>());
+                //foreach (var paragraph in paragraphs.Where(p => p.Descendants<FieldCode>().Any()))
+                //{
+                //    var code = paragraph.InnerText.Trim();
+                //    paragraph.RemoveAllChildren<Run>();
+                //    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.Begin }));
+                //    paragraph.Append(new Run(new FieldCode(code)));
+                //    paragraph.Append(new Run(new FieldChar() { FieldCharType = FieldCharValues.End }));
+                //}
+
+                var fields = paragraphs.SelectMany(p => p.Descendants<FieldCode>()).Where(p => p.InnerText.Contains("DOCVARIABLE"));
                 replace(fields.ToArray(), rowValue);
                 clean(fields.ToArray(), rowValue);
 

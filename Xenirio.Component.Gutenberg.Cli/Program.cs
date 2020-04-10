@@ -34,7 +34,7 @@ namespace Xenirio.Component.Gutenberg.Cli
                                 var template = opts.Template;
                                 var output = opts.Output;
                                 if (string.IsNullOrEmpty(output))
-                                    output = string.Format("{0}\\{1}.pdf", Environment.CurrentDirectory, Path.GetFileNameWithoutExtension(template));
+                                    output = string.Format("{0}\\{1}.docx", Environment.CurrentDirectory, Path.GetFileNameWithoutExtension(template));
                                 var report = new ReportGenerator(string.Format("{0}\\{1}", Environment.CurrentDirectory, template));
                                 var json = JObject.Parse(File.ReadAllText(string.Format("{0}\\{1}", Environment.CurrentDirectory, opts.Source)));
                                 report.setJsonObject(json);
