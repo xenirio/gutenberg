@@ -9,10 +9,18 @@ using DocumentFormat.OpenXml;
 
 namespace Xenirio.Component.Gutenberg
 {
-    public class ReportDocument
+    public class ReportDocument : ReportDocumentContext
     {
         private Dictionary<string, IReportReplaceable> variables = new Dictionary<string, IReportReplaceable>();
         private Dictionary<string, ReportTemplate> templates = new Dictionary<string, ReportTemplate>();
+
+        public ReportTemplate GetTemplate(string templateName)
+        {
+            if (templates.ContainsKey(templateName))
+                return templates[templateName];
+            else
+                return null;
+        }
 
         public void InjectReportElement(ReportElement element)
         {
@@ -21,7 +29,7 @@ namespace Xenirio.Component.Gutenberg
 
         public void RegisterTemplate(string templateName)
         {
-            templates.Add(templateName, new ReportTemplate(templateName));
+            templates.Add(templateName, new ReportTemplate(this, templateName));
         }
 
         public void Save(string filePath)

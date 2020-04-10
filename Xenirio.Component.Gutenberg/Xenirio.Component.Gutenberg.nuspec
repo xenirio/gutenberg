@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Xenirio.Component.Gutenberg</id>
-    <version>1.7.6</version>
+    <version>1.7.7</version>
     <authors>Vee</authors>
     <owners>Vee</owners>
     <projectUrl>https://github.com/xenirio/reporting-service</projectUrl>
@@ -18,6 +18,8 @@
       - Fix bugs of inline paragraph has overriden
       v1.7.6
       - Support inline text template
+      v1.7.7
+      - Support Nested Template
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags></tags>

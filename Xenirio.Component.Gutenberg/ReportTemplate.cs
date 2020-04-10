@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +11,20 @@ using Xenirio.Component.Gutenberg.Model;
 
 namespace Xenirio.Component.Gutenberg
 {
-    internal class ReportTemplate
+    public class ReportTemplate
     {
         private Body rootElement;
+        private ReportDocumentContext context;
 
-        internal string Name { get; set; }
+        public string Name { get; set; }
 
-        internal ReportTemplate(string templateName)
+        public ReportTemplate(ReportDocumentContext context, string templateName)
         {
             Name = templateName;
+            this.context = context;
         }
 
-        internal void Apply(OpenXmlElement replacedElement, IReportReplaceable[][] templateValues)
+        public void Apply(OpenXmlElement replacedElement, IReportReplaceable[][] templateValues)
         {
             var templateValuesDicts = new List<Dictionary<string, IReportReplaceable>>();
             var mainPart = getMainDocumentPart(replacedElement);
@@ -38,9 +41,9 @@ namespace Xenirio.Component.Gutenberg
                 }
                 templateValuesDicts.Add(rowDict);
             }
-
-            var paragraphs = new List<Paragraph>();
+ 
             foreach (var rowValue in templateValuesDicts) {
+                var paragraphs = new List<Paragraph>();
                 var dRootElement = rootElement.Clone() as Body;
                 paragraphs.AddRange(dRootElement.Descendants<Paragraph>());
 
@@ -125,7 +128,19 @@ namespace Xenirio.Component.Gutenberg
                 if (rowValue.ContainsKey(key))
                 {
                     variable = rowValue[key];
-                    variable.Replace((Run)field.Parent);
+                    if (variable is ReportTemplateElement)
+                    {
+                        var templateElement = variable as ReportTemplateElement;
+                        var template = context.GetTemplate(templateElement.TemplateKey);
+                        if (template != null)
+                        {
+                            template.Apply(field.Ancestors<Paragraph>().Single(), templateElement.Value);
+                        }
+                        else
+                            throw new KeyNotFoundException($"Not found template key {templateElement.TemplateKey}");
+                    }
+                    else 
+                        variable.Replace((Run)field.Parent);
                 }
             }
         }
@@ -138,12 +153,15 @@ namespace Xenirio.Component.Gutenberg
                 if (!rowValue.ContainsKey(key))
                 {
                     var elem = field.Ancestors<Paragraph>().Single();
+                    if (elem.Parent == null)
+                        continue;
                     if (elem.Parent.GetType() == typeof(TableCell))
                     {
                         try
                         {
                             elem.Parent.Parent.Remove();
-                        } catch
+                        }
+                        catch
                         {
                             // Ignore in case cannot remove
                         }
@@ -156,7 +174,7 @@ namespace Xenirio.Component.Gutenberg
             }
         }
 
-        internal void Compile(WordprocessingDocument document)
+        public void Compile(WordprocessingDocument document)
         {
             var fields = document.MainDocumentPart.RootElement.Descendants<FieldCode>();
             var startSectionName = string.Format("DOCVARIABLETemplateSection.{0}.Start", Name);
